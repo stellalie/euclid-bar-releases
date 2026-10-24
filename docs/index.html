@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Euclid: the shortest path from thought to command</title>
+<meta name="description" content="A native macOS launcher for developers. Every action is a shell command in a TOML file. Searches 10,000 items in under a millisecond. Private, local, pay once.">
+<meta property="og:title" content="Euclid: the shortest path from thought to command">
+<meta property="og:description" content="A native macOS launcher where every action is a shell command. Sub-millisecond search, private, pay once.">
+<meta property="og:image" content="poster.jpg">
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --bg: #0e0d13;
+    --surface: #17151f;
+    --line: #2a2735;
+    --text: #ecebf2;
+    --muted: #9a97a8;
+    --accent: #7c5cff;
+    --accent-text: #ffffff;
+    --code: #c9b8ff;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #fbfaff;
+      --surface: #ffffff;
+      --line: #e4e1ee;
+      --text: #17151f;
+      --muted: #5f5b6e;
+      --code: #5a3fd6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .mono, code, kbd { font-family: var(--mono); }
+  kbd {
+    font-size: .85em;
+    padding: 1px 6px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface);
+  }
+
+  nav { display: flex; align-items: center; gap: 10px; padding: 20px 0; font-weight: 600; }
+  nav img { width: 28px; height: 28px; }
+  nav .links { margin-left: auto; display: flex; gap: 20px; font-weight: 500; font-size: 15px; }
+  nav .links a { text-decoration: none; color: var(--muted); }
+  nav .links a:hover { color: var(--text); }
+
+  .hero { text-align: center; padding: 56px 0 32px; }
+  .hero img.icon { width: 96px; height: 96px; }
+  h1 { font-size: clamp(36px, 6vw, 60px); line-height: 1.05; letter-spacing: -.03em; margin: 20px 0 16px; }
+  .lead { font-size: clamp(18px, 2.2vw, 21px); color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+  .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 10px;
+    font-weight: 600; text-decoration: none; border: 1px solid var(--line);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+  .btn:hover { filter: brightness(1.08); }
+  .fine { font-size: 14px; color: var(--muted); margin-top: 14px; }
+
+  .demo { margin: 32px auto 0; max-width: 960px; }
+  .demo video { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
+  .speed {
+    margin: 18px auto 0; width: fit-content; font-family: var(--mono); font-size: 15px;
+    color: var(--muted); padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px;
+  }
+  .speed b { color: var(--text); font-weight: 600; }
+
+  section { padding: 72px 0 0; }
+  h2 { font-size: clamp(26px, 3.5vw, 34px); letter-spacing: -.02em; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; color: var(--muted); }
+  .num { font-family: var(--mono); color: var(--accent); font-size: 14px; margin-bottom: 10px; }
+
+  pre {
+    margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; overflow-x: auto; font-size: 14px; line-height: 1.6;
+  }
+  pre .c { color: var(--muted); }
+  pre .k { color: var(--code); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  ul.plain { margin: 0; padding: 0; list-style: none; }
+  ul.plain li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  ul.plain li:last-child { border-bottom: 0; }
+
+  .price { font-size: 40px; font-weight: 700; letter-spacing: -.02em; margin: 6px 0 2px; }
+  .price small { font-size: 16px; font-weight: 500; color: var(--muted); }
+  .card ul { margin: 16px 0 20px; padding-left: 18px; color: var(--muted); }
+  .card ul li { margin: 4px 0; }
+  .card.pro { border-color: var(--accent); }
+  .tag {
+    display: inline-block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--accent); margin-bottom: 4px;
+  }
+
+  footer { padding: 72px 0 40px; color: var(--muted); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .grid, .two { grid-template-columns: 1fr; }
+    nav .links { display: none; }
+    .hero { padding-top: 32px; }
+    h1 br { display: none; }
+    section { padding-top: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <img src="icon.png" alt="">
+    <span>Euclid</span>
+    <div class="links">
+      <a href="#why">Why</a>
+      <a href="#recipes">Recipes</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img class="icon" src="icon.png" alt="Euclid app icon">
+    <h1>The shortest path from<br>thought to command.</h1>
+    <p class="lead">A native macOS launcher for developers. Press <kbd>⌥Space</kbd>, type, hit <kbd>↵</kbd>.
+      Every action is a shell command in your dotfiles. No SDK, no account, no subscription.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Download for macOS</a>
+      <a class="btn" href="#pricing">Pricing</a>
+    </div>
+    <p class="fine">30-day free trial, never locks · macOS 14+ · Apple Silicon and Intel · signed and notarized</p>
+
+    <div class="demo">
+      <video src="demo.mp4" poster="poster.jpg" autoplay muted loop playsinline
+             aria-label="Euclid searching apps, clipboard and history, then sending a question to an AI agent"></video>
+    </div>
+    <div class="speed"><b>12,431</b> items · <b>0.6 ms</b></div>
+  </header>
+
+  <section id="why">
+    <h2>Why Euclid</h2>
+    <p class="sub">Not another extension store. A sharp tool you configure like the rest of your setup.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="num">01 · config as code</div>
+        <h3>Every action is one shell line</h3>
+        <p>Actions live in <code>~/.config/euclid/config.toml</code>, reload on save, and pass
+          <code>--check-config</code> in CI. If it runs in your terminal, it's an action.</p>
+      </div>
+      <div class="card">
+        <div class="num">02 · agent launcher</div>
+        <h3>Ask your agent in one keystroke</h3>
+        <p>Type a question, press <kbd>⌘↵</kbd>. Claude Code, Codex or pi opens in a new Ghostty tab
+          or herdr split with your prompt already in.</p>
+      </div>
+      <div class="card">
+        <div class="num">03 · fast and local</div>
+        <h3>Native Swift, nothing leaves your Mac</h3>
+        <p>10,000 items searched in under 1 ms. Opens in ~20 ms, idles at ~30 MB.
+          Password-manager copies are never recorded.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="search">
+    <h2>One box for everything you touch</h2>
+    <p class="sub">Fuzzy-matched, ranked by what you actually pick.</p>
+    <div class="two">
+      <ul class="plain">
+        <li><b>Apps, git projects and files</b> (via Spotlight)</li>
+        <li><b>Clipboard history</b> with preview, images and snippets</li>
+        <li><b>Browser history</b> from Arc, Dia, Chrome, Safari and more</li>
+        <li><b>Obsidian notes</b> and <b>Bitbucket</b> PRs and reviews</li>
+        <li><b>Dev answers</b> inline: epochs, JSON, base64, JWTs, colours, units</li>
+      </ul>
+      <pre><span class="c"># type straight into the box</span>
+1697040000      <span class="c">→</span> <span class="k">2023-10-11 16:00 UTC</span>
+1.5 gb in mb    <span class="c">→</span> <span class="k">1,536 MB</span>
+#ff8800         <span class="c">→</span> <span class="k">rgb(255, 136, 0)</span>
+uuid            <span class="c">→</span> <span class="k">copied a fresh UUID</span>
+gh swift test   <span class="c">→</span> <span class="k">alias: searches GitHub</span></pre>
+    </div>
+  </section>
+
+  <section id="recipes">
+    <h2>Recipes, not extensions</h2>
+    <p class="sub">Your query arrives as <code>$1</code>, passed as an argument, never pasted into the command.</p>
+    <pre><span class="k">[[action]]</span>                                   <span class="c"># ⌘1 and ⌘↵</span>
+name = "Ask Claude in a new Ghostty tab"
+run  = 'ghostty-run tab claude "$1"'
+
+<span class="k">[[action]]</span>                                   <span class="c"># ⌘2</span>
+name = "Codex in a herdr split"
+run  = 'herdr-run split codex "$1"'
+
+<span class="k">[[action]]</span>
+name  = "Search GitHub code"
+alias = "gh"
+run   = 'open "https://github.com/search?type=code&amp;q=$EUCLID_QUERY_URL"'
+
+<span class="k">[[action]]</span>
+name = "Pretty-print JSON to clipboard"
+run  = 'printf %s "$1" | jq . | pbcopy'</pre>
+  </section>
+
+  <section id="pricing">
+    <h2>Try everything. Pay once.</h2>
+    <p class="sub">The whole app, unlocked, from day one. After 30 days Euclid asks you to buy a licence. It never locks.</p>
+    <div class="two">
+      <div class="card">
+        <span class="tag">Personal</span>
+        <div class="price">US$29 <small>one-time</small></div>
+        <ul>
+          <li>For you, on all your Macs</li>
+          <li>Every feature and integration</li>
+          <li>2 years of updates included</li>
+          <li>No account, no subscription</li>
+        </ul>
+        <!-- Swap href for the Paddle checkout link once the Paddle account is approved. -->
+        <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Download and try free</a>
+      </div>
+      <div class="card pro">
+        <span class="tag">Business</span>
+        <div class="price">US$59 <small>per seat, one-time</small></div>
+        <ul>
+          <li>Required for use at work</li>
+          <li>Invoices and volume pricing</li>
+          <li>Licences move between people as your team changes</li>
+          <li>2 years of updates included</li>
+        </ul>
+        <!-- TODO before launch: Paddle business checkout link (or a sales email on the new domain). -->
+        <a class="btn" href="#pricing">Buy for your team</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Stella Lie</span>
+    <a href="https://github.com/stellalie/euclid-bar-releases/releases">Release notes</a>
+    <span>Made for people who live in the terminal.</span>
+  </footer>
+
+</div>
+</body>
+</html>
