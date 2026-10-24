@@ -126,3 +126,11 @@ footer a { color: var(--muted); }
   padding: 3px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--muted);
 }
 @media (max-width: 760px) { .recipes { grid-template-columns: 1fr; } }
+
+/* Legal pages */
+.legal { max-width: 720px; padding-top: 32px; }
+.legal h3 { margin: 28px 0 8px; font-size: 19px; }
+.legal p, .legal li { color: var(--text); }
+.legal ul { padding-left: 20px; }
+.legal li { margin: 6px 0; }
+.legal a { color: var(--accent); }
