@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Euclid recipes: copy-paste launcher actions for developers</title>
+<meta name="description" content="Copy-paste TOML actions for Euclid, the macOS launcher where every action is a shell command: AI agents, GitHub, Jira, packages, terminal and more.">
+<link rel="canonical" href="https://euclid.lgtmworks.com/recipes/">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="../" style="display:flex;align-items:center;gap:10px;text-decoration:none"><img src="../icon.png" alt=""><span>Euclid</span></a>
+    <div class="links">
+      <a href="../#why">Why</a>
+      <a href="./">Recipes</a>
+      <a href="../#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <section style="padding-top:32px">
+    <h2>Recipes</h2>
+    <p class="sub">Paste any of these into <code>~/.config/euclid/config.toml</code>. It reloads on save. Your query arrives as
+      <code>$1</code> (<code>$EUCLID_QUERY_URL</code> is URL-encoded); type an <code>alias</code> plus a space to run one directly.</p>
+    <div class="filters" role="group" aria-label="Filter recipes">
+      <button type="button" aria-pressed="true" data-cat="">All</button>
+      <button type="button" aria-pressed="false" data-cat="AI agents">AI agents</button>
+      <button type="button" aria-pressed="false" data-cat="Code">Code</button>
+      <button type="button" aria-pressed="false" data-cat="Packages">Packages</button>
+      <button type="button" aria-pressed="false" data-cat="Atlassian">Atlassian</button>
+      <button type="button" aria-pressed="false" data-cat="Terminal">Terminal</button>
+      <button type="button" aria-pressed="false" data-cat="Utilities">Utilities</button>
+      <button type="button" aria-pressed="false" data-cat="Docs">Docs</button>
+    </div>
+    <div class="recipes">
+      <article class="recipe" data-cat="AI agents">
+        <header><h3>Ask Claude in a new Ghostty tab</h3><span class="cat">AI agents</span></header>
+        <p>Type a question, ⌘↵, and Claude Code opens in a fresh tab with it.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Ask Claude in a new Ghostty tab"
+run  = 'ghostty-run tab claude "$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="AI agents">
+        <header><h3>Codex in a herdr split</h3><span class="cat">AI agents</span></header>
+        <p>Keep your current pane; Codex answers next to it.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Codex in a herdr split"
+run  = 'herdr-run split codex "$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="AI agents">
+        <header><h3>Ask pi in a new Ghostty window</h3><span class="cat">AI agents</span></header>
+        <p>A separate window for longer sessions.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Ask pi in a new window"
+run  = 'ghostty-run window pi "$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Code">
+        <header><h3>Search GitHub code</h3><span class="cat">Code</span></header>
+        <p>Type gh, a space, and what you are looking for.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Search GitHub code"
+alias = "gh"
+run   = 'open "https://github.com/search?type=code&amp;q=$EUCLID_QUERY_URL"'</pre>
+      </article>
+      <article class="recipe" data-cat="Code">
+        <header><h3>Open a GitHub repo</h3><span class="cat">Code</span></header>
+        <p>Type owner/repo and land on it.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Open repo"
+run  = 'open "https://github.com/$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Code">
+        <header><h3>Open a project in VS Code</h3><span class="cat">Code</span></header>
+        <p>Any path or repo name under ~/code.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Open in VS Code"
+run  = 'code "$HOME/code/$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Packages">
+        <header><h3>npm package</h3><span class="cat">Packages</span></header>
+        <p>Jump straight to a package page.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "npm package"
+alias = "npm"
+run   = 'open "https://www.npmjs.com/package/$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Packages">
+        <header><h3>Rust crate</h3><span class="cat">Packages</span></header>
+        <p>docs.rs for any crate.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Rust crate docs"
+alias = "rs"
+run   = 'open "https://docs.rs/$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Packages">
+        <header><h3>Go package</h3><span class="cat">Packages</span></header>
+        <p>pkg.go.dev search.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Go package"
+alias = "go"
+run   = 'open "https://pkg.go.dev/search?q=$EUCLID_QUERY_URL"'</pre>
+      </article>
+      <article class="recipe" data-cat="Atlassian">
+        <header><h3>Open a Jira issue</h3><span class="cat">Atlassian</span></header>
+        <p>Type jira ABC-123. Set your site once in [env].</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[env]</span>
+JIRA = "https://your-site.atlassian.net"
+
+<span class="k">[[action]]</span>
+name  = "Open Jira issue"
+alias = "jira"
+run   = 'open "$JIRA/browse/$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Atlassian">
+        <header><h3>Search Confluence</h3><span class="cat">Atlassian</span></header>
+        <p>Find the page you half remember. Uses <code>JIRA</code> from the recipe above.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Search Confluence"
+alias = "wiki"
+run   = 'open "$JIRA/wiki/search?text=$EUCLID_QUERY_URL"'</pre>
+      </article>
+      <article class="recipe" data-cat="Terminal">
+        <header><h3>man page in Ghostty</h3><span class="cat">Terminal</span></header>
+        <p>Read the manual in a new tab.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "man page"
+alias = "man"
+run   = 'ghostty-run tab man "$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Terminal">
+        <header><h3>tldr in Ghostty</h3><span class="cat">Terminal</span></header>
+        <p>The short version of a man page (needs tldr installed).</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "tldr"
+alias = "tl"
+run   = 'ghostty-run tab tldr "$1"'</pre>
+      </article>
+      <article class="recipe" data-cat="Terminal">
+        <header><h3>Free a port</h3><span class="cat">Terminal</span></header>
+        <p>Type port 3000 to kill whatever is listening on it.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Kill process on port"
+alias = "port"
+run   = 'lsof -ti tcp:"$1" | xargs kill'</pre>
+      </article>
+      <article class="recipe" data-cat="Utilities">
+        <header><h3>Pretty-print JSON to clipboard</h3><span class="cat">Utilities</span></header>
+        <p>Paste minified JSON, get it formatted (needs jq).</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name = "Pretty JSON to clipboard"
+run  = 'printf %s "$1" | jq . | pbcopy'</pre>
+      </article>
+      <article class="recipe" data-cat="Utilities">
+        <header><h3>Random password to clipboard</h3><span class="cat">Utilities</span></header>
+        <p>24 random bytes, base64, no newline.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "New password"
+alias = "pw"
+run   = 'openssl rand -base64 24 | tr -d "\n" | pbcopy'</pre>
+      </article>
+      <article class="recipe" data-cat="Utilities">
+        <header><h3>Explain a shell command</h3><span class="cat">Utilities</span></header>
+        <p>explainshell breaks a command into its parts.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "Explain shell command"
+alias = "explain"
+run   = 'open "https://explainshell.com/explain?cmd=$EUCLID_QUERY_URL"'</pre>
+      </article>
+      <article class="recipe" data-cat="Docs">
+        <header><h3>Search MDN</h3><span class="cat">Docs</span></header>
+        <p>Web platform docs.</p>
+        <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
+name  = "MDN"
+alias = "mdn"
+run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'</pre>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Stella Lie</span>
+    <a href="../">Home</a>
+    <span>Have a recipe? Send it in and it may land here.</span>
+  </footer>
+</div>
+<script>
+  for (const b of document.querySelectorAll('.copy')) {
+    b.addEventListener('click', async () => {
+      const text = b.parentElement.textContent.replace(/^Copy(ed)?/, '');
+      try { await navigator.clipboard.writeText(text); b.textContent = 'Copied'; } catch { b.textContent = 'Select + ⌘C'; }
+      setTimeout(() => (b.textContent = 'Copy'), 1500);
+    });
+  }
+  const filters = document.querySelectorAll('.filters button');
+  for (const f of filters) {
+    f.addEventListener('click', () => {
+      for (const g of filters) g.setAttribute('aria-pressed', String(g === f));
+      for (const r of document.querySelectorAll('.recipe')) r.hidden = !!f.dataset.cat && r.dataset.cat !== f.dataset.cat;
+    });
+  }
+</script>
+</body>
+</html>

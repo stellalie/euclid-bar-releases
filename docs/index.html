@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Euclid: the shortest path from thought to command</title>
+<meta name="description" content="A native macOS launcher for developers. Every action is a shell command in a TOML file. Searches 10,000 items in under a millisecond. Private, local, pay once.">
+<meta property="og:title" content="Euclid: the shortest path from thought to command">
+<meta property="og:description" content="A native macOS launcher where every action is a shell command. Sub-millisecond search, private, pay once.">
+<meta property="og:image" content="https://euclid.lgtmworks.com/poster.jpg">
+<meta property="og:url" content="https://euclid.lgtmworks.com/">
+<link rel="canonical" href="https://euclid.lgtmworks.com/">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <img src="icon.png" alt="">
+    <span>Euclid</span>
+    <div class="links">
+      <a href="#why">Why</a>
+      <a href="recipes/">Recipes</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img class="icon" src="icon.png" alt="Euclid app icon">
+    <h1>The shortest path from<br>thought to command.</h1>
+    <p class="lead">A native macOS launcher for developers. Press <kbd>⌥Space</kbd>, type, hit <kbd>↵</kbd>.
+      Every action is a shell command in your dotfiles. No SDK, no account, no subscription.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Download for macOS</a>
+      <a class="btn" href="#pricing">Pricing</a>
+    </div>
+    <p class="fine">30-day free trial, never locks · macOS 14+ · Apple Silicon and Intel · signed and notarized</p>
+
+    <div class="demo">
+      <video src="demo.mp4" poster="poster.jpg" autoplay muted loop playsinline
+             aria-label="Euclid searching apps, clipboard and history, then sending a question to an AI agent"></video>
+    </div>
+    <div class="speed"><b>12,431</b> items · <b>0.6 ms</b></div>
+  </header>
+
+  <section id="why">
+    <h2>Why Euclid</h2>
+    <p class="sub">Not another extension store. A sharp tool you configure like the rest of your setup.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="num">01 · config as code</div>
+        <h3>Every action is one shell line</h3>
+        <p>Actions live in <code>~/.config/euclid/config.toml</code>, reload on save, and pass
+          <code>--check-config</code> in CI. If it runs in your terminal, it's an action.</p>
+      </div>
+      <div class="card">
+        <div class="num">02 · agent launcher</div>
+        <h3>Ask your agent in one keystroke</h3>
+        <p>Type a question, press <kbd>⌘↵</kbd>. Claude Code, Codex or pi opens in a new Ghostty tab
+          or herdr split with your prompt already in.</p>
+      </div>
+      <div class="card">
+        <div class="num">03 · fast and local</div>
+        <h3>Native Swift, nothing leaves your Mac</h3>
+        <p>10,000 items searched in under 1 ms. Opens in ~20 ms, idles at ~30 MB.
+          Password-manager copies are never recorded.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="search">
+    <h2>One box for everything you touch</h2>
+    <p class="sub">Fuzzy-matched, ranked by what you actually pick.</p>
+    <div class="two">
+      <ul class="plain">
+        <li><b>Apps, git projects and files</b> (via Spotlight)</li>
+        <li><b>Clipboard history</b> with preview, images and snippets</li>
+        <li><b>Browser history</b> from Arc, Dia, Chrome, Safari and more</li>
+        <li><b>Obsidian notes</b> and <b>Bitbucket</b> PRs and reviews</li>
+        <li><b>Dev answers</b> inline: epochs, JSON, base64, JWTs, colours, units</li>
+      </ul>
+      <pre><span class="c"># type straight into the box</span>
+1697040000      <span class="c">→</span> <span class="k">2023-10-11 16:00 UTC</span>
+1.5 gb in mb    <span class="c">→</span> <span class="k">1,536 MB</span>
+#ff8800         <span class="c">→</span> <span class="k">rgb(255, 136, 0)</span>
+uuid            <span class="c">→</span> <span class="k">copied a fresh UUID</span>
+gh swift test   <span class="c">→</span> <span class="k">alias: searches GitHub</span></pre>
+    </div>
+  </section>
+
+  <section id="recipes">
+    <h2>Recipes, not extensions</h2>
+    <p class="sub">Your query arrives as <code>$1</code>, passed as an argument, never pasted into the command.</p>
+    <pre><span class="k">[[action]]</span>                                   <span class="c"># ⌘1 and ⌘↵</span>
+name = "Ask Claude in a new Ghostty tab"
+run  = 'ghostty-run tab claude "$1"'
+
+<span class="k">[[action]]</span>                                   <span class="c"># ⌘2</span>
+name = "Codex in a herdr split"
+run  = 'herdr-run split codex "$1"'
+
+<span class="k">[[action]]</span>
+name  = "Search GitHub code"
+alias = "gh"
+run   = 'open "https://github.com/search?type=code&amp;q=$EUCLID_QUERY_URL"'
+
+<span class="k">[[action]]</span>
+name = "Pretty-print JSON to clipboard"
+run  = 'printf %s "$1" | jq . | pbcopy'</pre>
+    <p class="fine"><a href="recipes/">Browse all recipes →</a></p>
+  </section>
+
+  <section id="pricing">
+    <h2>Try everything. Pay once.</h2>
+    <p class="sub">The whole app, unlocked, from day one. After 30 days Euclid asks you to buy a licence. It never locks.</p>
+    <div class="two">
+      <div class="card">
+        <span class="tag">Personal</span>
+        <div class="price">US$29 <small>one-time</small></div>
+        <ul>
+          <li>For you, on all your Macs</li>
+          <li>Every feature and integration</li>
+          <li>2 years of updates included</li>
+          <li>No account, no subscription</li>
+        </ul>
+        <!-- Swap href for the Paddle checkout link once the Paddle account is approved. -->
+        <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Download and try free</a>
+      </div>
+      <div class="card pro">
+        <span class="tag">Business</span>
+        <div class="price">US$59 <small>per seat, one-time</small></div>
+        <ul>
+          <li>Required for use at work</li>
+          <li>Invoices and volume pricing</li>
+          <li>Licences move between people as your team changes</li>
+          <li>2 years of updates included</li>
+        </ul>
+        <!-- TODO before launch: Paddle business checkout link (or a sales email on the new domain). -->
+        <a class="btn" href="#pricing">Buy for your team</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Stella Lie</span>
+    <a href="https://github.com/stellalie/euclid-bar-releases/releases">Release notes</a>
+    <span>Made for people who live in the terminal.</span>
+  </footer>
+
+</div>
+</body>
+</html>
