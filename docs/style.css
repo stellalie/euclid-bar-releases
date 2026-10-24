@@ -134,3 +134,22 @@ footer a { color: var(--muted); }
 .legal ul { padding-left: 20px; }
 .legal li { margin: 6px 0; }
 .legal a { color: var(--accent); }
+
+/* Feedback form */
+.feedback { display: grid; gap: 18px; }
+.feedback fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.feedback legend { font-weight: 600; margin-bottom: 8px; }
+.feedback label { display: grid; gap: 6px; font-weight: 600; }
+.feedback fieldset label { display: flex; align-items: center; gap: 6px; font-weight: 400; }
+.feedback input:not([type=radio]), .feedback textarea {
+  font: inherit; font-weight: 400; color: var(--text); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; box-sizing: border-box;
+}
+.feedback textarea { resize: vertical; }
+.feedback input:focus, .feedback textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.feedback .two-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.feedback .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.feedback button.btn { font: inherit; font-weight: 600; cursor: pointer; background: var(--surface); color: var(--text); }
+.feedback button.btn.primary { background: var(--accent); color: var(--accent-text); }
+.feedback .fine { margin: 0; }
+@media (max-width: 760px) { .feedback .two-fields { grid-template-columns: 1fr; } }
