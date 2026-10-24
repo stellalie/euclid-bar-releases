@@ -124,8 +124,10 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
           <li>2 years of updates included</li>
           <li>No account, no subscription</li>
         </ul>
-        <!-- Swap href for the Paddle checkout link once the Paddle account is approved. -->
-        <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Download and try free</a>
+        <div class="cta" style="justify-content:flex-start">
+          <a class="btn primary" href="#buy" data-price="personal">Buy · US$29</a>
+          <a class="btn" href="https://github.com/stellalie/euclid-bar-releases/releases/latest">Try free</a>
+        </div>
       </div>
       <div class="card pro">
         <span class="tag">Business</span>
@@ -136,8 +138,7 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
           <li>Licences move between people as your team changes</li>
           <li>2 years of updates included</li>
         </ul>
-        <!-- TODO before launch: Paddle business checkout link (or a sales email on the new domain). -->
-        <a class="btn" href="#pricing">Buy for your team</a>
+        <a class="btn primary" href="#buy" data-price="business">Buy for your team</a>
       </div>
     </div>
   </section>
@@ -153,5 +154,22 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
   </footer>
 
 </div>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // Paddle Billing checkout. The client-side token is public by design.
+  const PADDLE_TOKEN = "";
+  const PRICES = {
+    personal: { priceId: "pri_01m5q75xfm3ptqwwj80e6spnb9", quantity: 1 },
+    business: { priceId: "pri_01m5q73hw0zjq6vn24z020nwmd", quantity: 1 },
+  };
+  if (PADDLE_TOKEN && window.Paddle) Paddle.Initialize({ token: PADDLE_TOKEN });
+  for (const b of document.querySelectorAll("[data-price]")) {
+    b.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!PADDLE_TOKEN || !window.Paddle) { location.href = "mailto:hello@lgtmworks.com?subject=Buying%20Euclid"; return; }
+      Paddle.Checkout.open({ items: [PRICES[b.dataset.price]] });
+    });
+  }
+</script>
 </body>
 </html>
