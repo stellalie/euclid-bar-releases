@@ -242,3 +242,27 @@ h3.example { font-size: 19px; margin: 36px 0 10px; }
 .table tr:last-child td { border-bottom: 0; }
 @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
 pre.prompt { position: relative; padding-right: 76px; }
+
+/* Plugins page: Plugins | Actions tabs */
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tabs [role=tab] {
+  font: inherit; text-align: left; cursor: pointer; padding: 16px 18px; border-radius: 14px;
+  background: var(--surface); color: var(--muted); border: 1px solid var(--line);
+}
+.tabs [role=tab] b { display: block; color: var(--text); font-size: 19px; margin-bottom: 4px; }
+.tabs [role=tab] span { font-size: 15px; }
+.tabs [role=tab][aria-selected=true] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.tabs [role=tab][aria-selected=true] b { color: var(--accent); }
+.panel-top { padding-top: 28px; }
+@media (max-width: 760px) { .tabs { grid-template-columns: 1fr; } }
+.recipe .example { color: var(--text); font-size: 15px; }
+.recipe .example code, .howitworks code { color: var(--code); font-size: .9em; }
+.howitworks { margin-top: 12px; }
+.howitworks summary { cursor: pointer; color: var(--accent); font-size: 14px; font-family: var(--mono); }
+.howitworks p { margin: 10px 0 8px; font-size: 14px; }
+.howitworks p.file { margin: 12px 0 4px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.howitworks pre { font-size: 12px; padding: 12px; max-height: 320px; overflow: auto; }
+figure.shot { margin: 28px 0 0; }
+figure.shot img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
+figure.shot figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+figure.shot code { color: var(--code); font-size: .9em; }

@@ -24,7 +24,6 @@
       <a href="#why">Why</a>
       <a href="#features">Features</a>
       <a href="#offline">Privacy</a>
-      <a href="recipes/">Recipes</a>
       <a href="plugins/">Plugins</a>
       <a href="#pricing">Pricing</a>
     </div>
@@ -215,11 +214,11 @@ click = 'ghostty-run tab npx -y ccusage@latest daily'</pre>
       <code>github</code><code>linear</code><code>slack</code><code>tokens</code><code>currency</code><code>define</code><code>contacts</code><code>shortcuts</code>
     </div>
     <pre class="oneline">euclid-bar --plugin add github</pre>
-    <p class="fine"><a href="plugins/">Browse plugins and starter prompts →</a></p>
+    <p class="fine"><a href="plugins/">Browse plugins and starter prompts →</a> · <a href="plugins/#actions">or paste a one-line action</a></p>
   </section>
 
   <section id="recipes">
-    <h2>Recipes, not extensions</h2>
+    <h2>Actions: one line each</h2>
     <p class="sub">Your query arrives as <code>$1</code>, passed as an argument, never pasted into the command.</p>
     <pre><span class="k">[[action]]</span>                                   <span class="c"># ⌘1 and ⌘↵</span>
 name = "Ask Claude in a new Ghostty tab"
@@ -241,7 +240,7 @@ run   = 'open "https://github.com/search?type=code&amp;q=$EUCLID_QUERY_URL"'
 <span class="k">[[action]]</span>
 name = "Pretty-print JSON to clipboard"
 run  = 'printf %s "$1" | jq . | pbcopy'</pre>
-    <p class="fine"><a href="recipes/">Browse all recipes →</a></p>
+    <p class="fine"><a href="plugins/#actions">Browse all actions →</a></p>
   </section>
 
   <section id="pricing">
