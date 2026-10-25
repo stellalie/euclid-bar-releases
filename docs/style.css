@@ -195,9 +195,9 @@ pre.oneline { padding: 12px 18px; display: inline-block; }
 }
 
 /* Recipes: how-to steps and the submit dialog */
-ol.steps { margin: -12px 0 10px; padding-left: 22px; color: var(--muted); }
-ol.steps li { margin: 6px 0; }
-ol.steps b { color: var(--text); }
+ol.howto { margin: 0 0 16px; padding-left: 22px; color: var(--muted); }
+ol.howto li { margin: 6px 0; }
+ol.howto b { color: var(--text); }
 .steps-note { margin: 0 0 24px; }
 button.linkish { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
 .share { text-align: center; }
@@ -266,3 +266,11 @@ figure.shot { margin: 28px 0 0; }
 figure.shot img { width: 100%; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); }
 figure.shot figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
 figure.shot code { color: var(--code); font-size: .9em; }
+.recipe .alias, .runways .alias { margin-left: auto; font-size: 12px; font-family: var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; white-space: nowrap; }
+.recipe .alias code { color: var(--code); }
+.runways { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; margin: 0 0 24px; }
+.runways h3 { margin: 0 0 4px; font-size: 17px; }
+.runways li { color: var(--muted); }
+.runways li b { color: var(--text); }
+.runways code { color: var(--code); font-size: .9em; }
+.runways .alias { margin-left: 0; }

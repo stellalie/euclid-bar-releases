@@ -458,11 +458,21 @@ limit = 50</pre>
 
   <div role="tabpanel" id="actions" aria-labelledby="tab-actions" hidden>
   <section class="panel-top">
-    <ol class="steps">
+    <ol class="howto">
       <li><b>Copy</b> an action below.</li>
       <li><b>Paste</b> it at the end of <code>~/.config/euclid/config.toml</code> and save. Euclid picks it up straight away.</li>
-      <li><b>Use it:</b> type something, then press <kbd>⌘K</kbd> and pick the action. If it has an <code>alias</code>, type the alias and a space first, like <code>gh swift testing</code>.</li>
+      <li><b>Use it:</b> type something and run it any of the ways below.</li>
     </ol>
+    <div class="runways" id="run">
+      <h3>Four ways to run an action</h3>
+      <ul class="plain">
+        <li><kbd>⌘K</kbd> <b>Action list.</b> Type your words, press <kbd>⌘K</kbd>, pick one with the arrows or its number. Works for every action.</li>
+        <li><kbd>⌘↵</kbd> <kbd>⌘1</kbd>–<kbd>⌘9</kbd> <b>By position.</b> Actions keep the order they have in your config: the first one is <kbd>⌘1</kbd> and <kbd>⌘↵</kbd>, the second <kbd>⌘2</kbd>, and so on. Put your favourite first.</li>
+        <li><b>No match? They're already there.</b> When nothing matches what you typed (usually a question), your actions fill the list, so <kbd>↵</kbd> runs the first one. That's why the AI agent actions don't need an alias.</li>
+        <li><code>alias</code> <b>A word that runs it directly.</b> Add <code>alias = "gh"</code> and typing <code>gh swift testing</code> + <kbd>↵</kbd> runs that action on “swift testing”, skipping the list. Worth it for lookups you do every day; cards with one show an <span class="alias">alias</span> tag.</li>
+      </ul>
+      <p class="fine">Want one from anywhere, without opening Euclid? Give it a <code>hotkey = "ctrl+opt+g"</code> too; it runs with an empty query.</p>
+    </div>
     <p class="fine steps-note">What you typed reaches the command as <code>$1</code>, or URL-encoded as <code>$EUCLID_QUERY_URL</code>. It's passed as an argument, so it can't run anything by itself.
       Made a good one? <button type="button" class="linkish" data-open-submit>Share it</button></p>
     <div class="filters" role="group" aria-label="Filter recipes">
@@ -498,7 +508,7 @@ name = "Ask pi in a new window"
 run  = 'ghostty-run window pi "$1"'</pre>
       </article>
       <article class="recipe" data-cat="Code">
-        <header><h3>Search GitHub code</h3><span class="cat">Code</span></header>
+        <header><h3>Search GitHub code</h3><span class="cat">Code</span><span class="alias" title="Type this, a space, then your words">alias: <code>gh</code></span></header>
         <p>Type gh, a space, and what you are looking for.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Search GitHub code"
@@ -520,7 +530,7 @@ name = "Open in VS Code"
 run  = 'code "$HOME/code/$1"'</pre>
       </article>
       <article class="recipe" data-cat="Packages">
-        <header><h3>npm package</h3><span class="cat">Packages</span></header>
+        <header><h3>npm package</h3><span class="cat">Packages</span><span class="alias" title="Type this, a space, then your words">alias: <code>npm</code></span></header>
         <p>Jump straight to a package page.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "npm package"
@@ -528,7 +538,7 @@ alias = "npm"
 run   = 'open "https://www.npmjs.com/package/$1"'</pre>
       </article>
       <article class="recipe" data-cat="Packages">
-        <header><h3>Rust crate</h3><span class="cat">Packages</span></header>
+        <header><h3>Rust crate</h3><span class="cat">Packages</span><span class="alias" title="Type this, a space, then your words">alias: <code>rs</code></span></header>
         <p>docs.rs for any crate.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Rust crate docs"
@@ -536,7 +546,7 @@ alias = "rs"
 run   = 'open "https://docs.rs/$1"'</pre>
       </article>
       <article class="recipe" data-cat="Packages">
-        <header><h3>Go package</h3><span class="cat">Packages</span></header>
+        <header><h3>Go package</h3><span class="cat">Packages</span><span class="alias" title="Type this, a space, then your words">alias: <code>go</code></span></header>
         <p>pkg.go.dev search.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Go package"
@@ -544,7 +554,7 @@ alias = "go"
 run   = 'open "https://pkg.go.dev/search?q=$EUCLID_QUERY_URL"'</pre>
       </article>
       <article class="recipe" data-cat="Atlassian">
-        <header><h3>Open a Jira issue</h3><span class="cat">Atlassian</span></header>
+        <header><h3>Open a Jira issue</h3><span class="cat">Atlassian</span><span class="alias" title="Type this, a space, then your words">alias: <code>jira</code></span></header>
         <p>Type jira ABC-123. Set your site once in [env].</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[env]</span>
 JIRA = "https://your-site.atlassian.net"
@@ -555,7 +565,7 @@ alias = "jira"
 run   = 'open "$JIRA/browse/$1"'</pre>
       </article>
       <article class="recipe" data-cat="Atlassian">
-        <header><h3>Search Confluence</h3><span class="cat">Atlassian</span></header>
+        <header><h3>Search Confluence</h3><span class="cat">Atlassian</span><span class="alias" title="Type this, a space, then your words">alias: <code>wiki</code></span></header>
         <p>Find the page you half remember. Uses <code>JIRA</code> from the recipe above.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Search Confluence"
@@ -563,7 +573,7 @@ alias = "wiki"
 run   = 'open "$JIRA/wiki/search?text=$EUCLID_QUERY_URL"'</pre>
       </article>
       <article class="recipe" data-cat="Terminal">
-        <header><h3>man page in Ghostty</h3><span class="cat">Terminal</span></header>
+        <header><h3>man page in Ghostty</h3><span class="cat">Terminal</span><span class="alias" title="Type this, a space, then your words">alias: <code>man</code></span></header>
         <p>Read the manual in a new tab.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "man page"
@@ -571,7 +581,7 @@ alias = "man"
 run   = 'ghostty-run tab man "$1"'</pre>
       </article>
       <article class="recipe" data-cat="Terminal">
-        <header><h3>tldr in Ghostty</h3><span class="cat">Terminal</span></header>
+        <header><h3>tldr in Ghostty</h3><span class="cat">Terminal</span><span class="alias" title="Type this, a space, then your words">alias: <code>tl</code></span></header>
         <p>The short version of a man page (needs tldr installed).</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "tldr"
@@ -579,7 +589,7 @@ alias = "tl"
 run   = 'ghostty-run tab tldr "$1"'</pre>
       </article>
       <article class="recipe" data-cat="Terminal">
-        <header><h3>Free a port</h3><span class="cat">Terminal</span></header>
+        <header><h3>Free a port</h3><span class="cat">Terminal</span><span class="alias" title="Type this, a space, then your words">alias: <code>port</code></span></header>
         <p>Type port 3000 to kill whatever is listening on it.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Kill process on port"
@@ -594,7 +604,7 @@ name = "Pretty JSON to clipboard"
 run  = 'printf %s "$1" | jq . | pbcopy'</pre>
       </article>
       <article class="recipe" data-cat="Utilities">
-        <header><h3>Random password to clipboard</h3><span class="cat">Utilities</span></header>
+        <header><h3>Random password to clipboard</h3><span class="cat">Utilities</span><span class="alias" title="Type this, a space, then your words">alias: <code>pw</code></span></header>
         <p>24 random bytes, base64, no newline.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "New password"
@@ -602,7 +612,7 @@ alias = "pw"
 run   = 'openssl rand -base64 24 | tr -d "\n" | pbcopy'</pre>
       </article>
       <article class="recipe" data-cat="Utilities">
-        <header><h3>Explain a shell command</h3><span class="cat">Utilities</span></header>
+        <header><h3>Explain a shell command</h3><span class="cat">Utilities</span><span class="alias" title="Type this, a space, then your words">alias: <code>explain</code></span></header>
         <p>explainshell breaks a command into its parts.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "Explain shell command"
@@ -610,7 +620,7 @@ alias = "explain"
 run   = 'open "https://explainshell.com/explain?cmd=$EUCLID_QUERY_URL"'</pre>
       </article>
       <article class="recipe" data-cat="Docs">
-        <header><h3>Search MDN</h3><span class="cat">Docs</span></header>
+        <header><h3>Search MDN</h3><span class="cat">Docs</span><span class="alias" title="Type this, a space, then your words">alias: <code>mdn</code></span></header>
         <p>Web platform docs.</p>
         <pre><button class="copy" type="button">Copy</button><span class="k">[[action]]</span>
 name  = "MDN"
