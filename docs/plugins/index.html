@@ -86,7 +86,7 @@
 cost as a badge on the bar, using `npx -y ccusage@latest daily --json`.
 Clicking the badge should open `ccusage daily` in a new Ghostty tab
 (ghostty-run tab ...). Refresh every 5 minutes.
-Run `/Applications/euclid-bar.app/Contents/MacOS/euclid-bar --try-plugin tokens`
+Run `/Applications/Euclid.app/Contents/MacOS/euclid-bar --try-plugin tokens`
 and fix the plugin until it prints OK.</pre>
 
     <p class="muted-p" style="margin-top:22px">What the agent ends up writing:</p>
@@ -412,8 +412,8 @@ jq -c --arg to &quot;$to&quot; --arg from &quot;$from&quot; --arg n &quot;$amoun
         </details>
       </article>
     </div>
-    <p class="fine"><code>euclid-bar</code> is <code>/Applications/euclid-bar.app/Contents/MacOS/euclid-bar</code>. To type it
-      short, run <code>alias euclid-bar=/Applications/euclid-bar.app/Contents/MacOS/euclid-bar</code>.
+    <p class="fine"><code>euclid-bar</code> is <code>/Applications/Euclid.app/Contents/MacOS/euclid-bar</code>. To type it
+      short, run <code>alias euclid-bar=/Applications/Euclid.app/Contents/MacOS/euclid-bar</code>.
       Any git repository with a <code>plugin.toml</code> at its top level installs the same way:
       <code>euclid-bar --plugin add https://github.com/you/euclid-plugin-deploys</code>.</p>
   </section>
@@ -743,7 +743,7 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
     return `Read https://euclid.lgtmworks.com/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
 Then make a Euclid plugin in ~/.config/euclid/plugins/ that ${w}.
 Pick a short id for the folder. Keep secrets in the Keychain, never in plugin.toml.
-Run /Applications/euclid-bar.app/Contents/MacOS/euclid-bar --try-plugin <id>
+Run /Applications/Euclid.app/Contents/MacOS/euclid-bar --try-plugin <id>
 and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
   }
   function render() { out.textContent = ''; out.append(copyBtn, prompt()); }
