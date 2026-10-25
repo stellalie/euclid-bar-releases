@@ -208,3 +208,22 @@ dialog#submit {
 dialog#submit::backdrop { background: rgb(0 0 0 / .55); }
 dialog#submit h2 { margin: 0; }
 dialog#submit textarea { font-family: var(--mono); font-size: 14px; }
+
+/* Complete feature list */
+.jump { display: flex; flex-wrap: wrap; gap: 8px; }
+.jump a { font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); text-decoration: none; }
+.jump a:hover { color: var(--text); }
+.flist { padding-top: 48px; scroll-margin-top: 12px; }
+.flist .sub { margin-bottom: 16px; }
+.flist table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.flist th, .flist td { text-align: left; vertical-align: top; padding: 12px 18px; border-top: 1px solid var(--line); }
+.flist tr:first-child th, .flist tr:first-child td { border-top: 0; }
+.flist th { width: 32%; font-weight: 600; }
+.flist td { color: var(--muted); }
+.flist code, .jump code { font-size: .88em; color: var(--code); }
+.flist em, .sub em { font-style: normal; font-size: 12px; font-family: var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 0 6px; margin-left: 4px; font-weight: 500; white-space: nowrap; }
+em.tag-plugin { color: var(--accent); border-color: var(--accent); }
+@media (max-width: 760px) {
+  .flist th, .flist td { display: block; width: auto; }
+  .flist td { border-top: 0; padding-top: 0; }
+}
