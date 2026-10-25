@@ -115,11 +115,13 @@
     <p class="sub">Everything you configure lives in <code>~/.config/euclid</code>. Commit it with your dotfiles, and a new Mac is one <code>git clone</code> away.</p>
     <div class="two">
       <pre><span class="c">~/.config/euclid/</span>
-├── config.toml   <span class="c"># actions, snippets, hotkeys, aliases, integrations</span>
-├── bin/          <span class="c"># ghostty-run, herdr-run and your own scripts</span>
-└── plugins/      <span class="c"># one folder per plugin, plus AGENTS.md</span>
+├── config.toml  <span class="c"># actions, snippets, hotkeys</span>
+├── bin/         <span class="c"># your scripts</span>
+└── plugins/     <span class="c"># one folder each</span>
 
-<span class="k">$</span> cd ~/.config/euclid &amp;&amp; git init &amp;&amp; git add . &amp;&amp; git commit -m "my euclid"</pre>
+<span class="k">$</span> cd ~/.config/euclid
+<span class="k">$</span> git init &amp;&amp; git add .
+<span class="k">$</span> git commit -m "my euclid"</pre>
       <ul class="plain">
         <li><b>Review it like code.</b> Every change is a diff you can read, revert or share in a PR.</li>
         <li><b>No secrets in the repo.</b> Tokens stay in the Keychain; plugins and integrations read them with a command.</li>
