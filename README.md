@@ -17,3 +17,4 @@ Builds are signed with a Developer ID and notarized by Apple. The app updates it
 ---
 
 This repository only hosts releases and the update feed. The source code is private.
+The website lives at [lgtm.ninja/euclid](https://lgtm.ninja/euclid/) (source: stellalie/lgtmworks, `euclid/`).
