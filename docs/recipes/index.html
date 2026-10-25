@@ -23,8 +23,14 @@
 
   <section style="padding-top:32px">
     <h2>Recipes</h2>
-    <p class="sub">Paste any of these into <code>~/.config/euclid/config.toml</code>. It reloads on save. Your query arrives as
-      <code>$1</code> (<code>$EUCLID_QUERY_URL</code> is URL-encoded); type an <code>alias</code> plus a space to run one directly.</p>
+    <p class="sub">Ready-made actions. Each one is a few lines of TOML that runs a shell command on what you typed.</p>
+    <ol class="steps">
+      <li><b>Copy</b> a recipe below.</li>
+      <li><b>Paste</b> it at the end of <code>~/.config/euclid/config.toml</code> and save. Euclid picks it up straight away.</li>
+      <li><b>Use it:</b> type something, then press <kbd>⌘K</kbd> and pick the action. If it has an <code>alias</code>, type the alias and a space first, like <code>gh swift testing</code>.</li>
+    </ol>
+    <p class="fine steps-note">What you typed reaches the command as <code>$1</code>, or URL-encoded as <code>$EUCLID_QUERY_URL</code>. It's passed as an argument, so it can't run anything by itself.
+      Made a good one? <button type="button" class="linkish" data-open-submit>Share your recipe</button></p>
     <div class="filters" role="group" aria-label="Filter recipes">
       <button type="button" aria-pressed="true" data-cat="">All</button>
       <button type="button" aria-pressed="false" data-cat="AI agents">AI agents</button>
@@ -180,6 +186,12 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
     </div>
   </section>
 
+  <section class="share">
+    <h2>Got a recipe worth sharing?</h2>
+    <p class="sub">Send it in. We try each one and add the good ones here, with your name if you like.</p>
+    <button type="button" class="btn primary" data-open-submit>Submit a recipe</button>
+  </section>
+
   <footer>
     <span>© 2026 <a href="https://lgtmworks.com/">LGTM Works</a> · Made in Sydney</span>
     <a href="../terms/">Terms</a>
@@ -188,10 +200,34 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
     <a href="../feedback/">Feedback</a>
     <a href="mailto:hello@lgtmworks.com">hello@lgtmworks.com</a>
     <a href="../">Home</a>
-    <span>Have a recipe? Send it in and it may land here.</span>
+    <span>For people who live in the terminal.</span>
   </footer>
+
 </div>
+
+<dialog id="submit" aria-labelledby="submit-title">
+  <form method="dialog" class="feedback">
+    <h2 id="submit-title">Submit a recipe</h2>
+    <p class="fine">This opens an email to hello@lgtmworks.com in your mail app. Nothing is sent until you press Send there.</p>
+    <label>What it does <input name="title" required placeholder="Open the current branch's PR"></label>
+    <label>The TOML <textarea name="toml" rows="6" required spellcheck="false" placeholder='[[action]]&#10;name = "…"&#10;run  = &#39;…&#39;'></textarea></label>
+    <label>Anything it needs <input name="needs" placeholder="the gh CLI, Ghostty…"></label>
+    <label>Credit it to <input name="credit" placeholder="Your name or @handle (optional)"></label>
+    <div class="actions">
+      <button class="btn primary" value="send">Open email</button>
+      <button class="btn" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
 <script>
+  const dlg = document.getElementById('submit');
+  for (const b of document.querySelectorAll('[data-open-submit]')) b.addEventListener('click', () => dlg.showModal());
+  dlg.addEventListener('close', () => {
+    if (dlg.returnValue !== 'send') return;
+    const f = new FormData(dlg.querySelector('form'));
+    const body = [f.get('title'), '', f.get('toml'), '', 'Needs: ' + (f.get('needs') || '-'), 'Credit: ' + (f.get('credit') || '-')].join('\n');
+    location.href = 'mailto:hello@lgtmworks.com?subject=' + encodeURIComponent('Recipe: ' + f.get('title')) + '&body=' + encodeURIComponent(body);
+  });
   for (const b of document.querySelectorAll('.copy')) {
     b.addEventListener('click', async () => {
       const text = b.parentElement.textContent.replace(/^Copy(ed)?/, '');

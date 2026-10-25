@@ -22,6 +22,7 @@
     <a class="maker" href="https://lgtmworks.com/">by lgtm works</a>
     <div class="links">
       <a href="#why">Why</a>
+      <a href="#features">Features</a>
       <a href="#offline">Privacy</a>
       <a href="recipes/">Recipes</a>
       <a href="#pricing">Pricing</a>
@@ -38,6 +39,13 @@
       <a class="btn" href="#pricing">Pricing</a>
     </div>
     <p class="fine">Free for personal use during the beta · macOS 14+ · Apple Silicon and Intel · signed and notarized</p>
+    <ul class="promises">
+      <li><b>1.4 ms</b> search</li>
+      <li><b>No subscription</b>, ever</li>
+      <li><b>Bring your own AI</b>, or none</li>
+      <li><b>Works offline</b></li>
+      <li><b>Config is a file</b></li>
+    </ul>
 
     <div class="demo">
       <video src="demo.mp4" poster="poster.jpg" autoplay muted loop playsinline
@@ -101,6 +109,20 @@
     </div>
   </section>
 
+
+  <section id="different">
+    <h2>What you don't sign up for</h2>
+    <p class="sub">Launchers tend to grow accounts, AI plans and extension stores. Euclid keeps the box small and hands you the keys.</p>
+    <div class="compare">
+      <div class="row head"><span></span><span>Euclid</span><span>The usual launcher</span></div>
+      <div class="row"><span>Price</span><span><b>Pay once.</b> Free during the beta.</span><span>Monthly plan for AI, sync and themes</span></div>
+      <div class="row"><span>AI</span><span><b>Any agent or model you run</b>, local ones too</span><span>The vendor's AI, on the vendor's plan</span></div>
+      <div class="row"><span>Extending it</span><span><b>A script that prints JSON</b>, in any language</span><span>An SDK, a build step and a store review</span></div>
+      <div class="row"><span>Settings</span><span><b>One TOML file</b> in your dotfiles</span><span>A settings window and a cloud account</span></div>
+      <div class="row"><span>Your data</span><span><b>Stays on your Mac</b></span><span>Synced to someone's server</span></div>
+    </div>
+  </section>
+
   <section id="offline">
     <h2>Where your data goes</h2>
     <p class="sub">Euclid works with the network unplugged. These are the only times it goes online.</p>
@@ -119,24 +141,79 @@
     </div>
   </section>
 
-  <section id="search">
-    <h2>One box for everything you touch</h2>
-    <p class="sub">Fuzzy-matched, ranked by what you actually pick.</p>
-    <div class="two">
-      <ul class="plain">
-        <li><b>Apps, git projects and files</b> (via Spotlight)</li>
-        <li><b>Clipboard history</b> with preview, images and snippets</li>
-        <li><b>Browser history</b> from Arc, Dia, Chrome, Safari and more</li>
-        <li><b>Obsidian notes</b> and <b>Bitbucket</b> PRs and reviews</li>
-        <li><b>Dev answers</b> inline: epochs, JSON, base64, JWTs, colours, units</li>
-      </ul>
-      <pre><span class="c"># type straight into the box</span>
-1697040000      <span class="c">→</span> <span class="k">2023-10-11 16:00 UTC</span>
-1.5 gb in mb    <span class="c">→</span> <span class="k">1,536 MB</span>
-#ff8800         <span class="c">→</span> <span class="k">rgb(255, 136, 0)</span>
-uuid            <span class="c">→</span> <span class="k">copied a fresh UUID</span>
-gh swift test   <span class="c">→</span> <span class="k">alias: searches GitHub</span></pre>
+  <section id="features">
+    <h2>Everything in the box</h2>
+    <p class="sub">Built in, on by default unless it says otherwise. Each one is a line in the config you can switch off.</p>
+    <div class="features">
+      <div class="fgroup">
+        <h3>Search</h3>
+        <ul>
+          <li><b>Apps, git projects and files</b>, files via Spotlight</li>
+          <li><b>Clipboard history</b>: text, images and copied files</li>
+          <li><b>Browser history</b> from Arc, Dia, Chrome, Safari and more</li>
+          <li><b>Obsidian notes</b> by title and text</li>
+          <li><b>Page text</b> of sites you visited <em>opt-in</em></li>
+          <li><b>Bitbucket and Jira</b>: your PRs, reviews and issues</li>
+        </ul>
+      </div>
+      <div class="fgroup">
+        <h3>Answers as you type</h3>
+        <ul>
+          <li><b>Calculator and units</b>: <code>1.5 gb in mb</code></li>
+          <li><b>Epoch ⇄ date</b>: <code>1697040000</code></li>
+          <li><b>JSON, JWT, base64, URL</b> decode and pretty-print</li>
+          <li><b>Colours</b>: <code>#ff8800</code> ⇄ <code>rgb()</code>, with a swatch</li>
+          <li><b>Fresh UUIDs</b>, and <code>↵</code> copies any answer</li>
+        </ul>
+      </div>
+      <div class="fgroup">
+        <h3>Without opening the panel</h3>
+        <ul>
+          <li><b>Text expansion</b>: type a snippet's keyword in any app <em>opt-in</em></li>
+          <li><b>Per-command hotkeys</b> for any app, project, action or snippet</li>
+          <li><b>Snippets</b> with <code>{date}</code> <code>{clipboard}</code> <code>{uuid}</code></li>
+          <li><b>MCP server</b>: your agents search what Euclid knows</li>
+        </ul>
+      </div>
+      <div class="fgroup">
+        <h3>Make it yours</h3>
+        <ul>
+          <li><b>Actions</b>: any shell line, on <code>⌘1</code>–<code>⌘9</code> and <code>⌘K</code></li>
+          <li><b>Project tasks</b>: <code>make</code>, <code>npm</code>, <code>just</code>, <code>cargo</code> in a new tab</li>
+          <li><b>Preview pane</b>: clips, images, READMEs, Quick Look</li>
+          <li><b>Learns what you pick</b>, plus aliases and favourites</li>
+          <li><b>Team config</b> via <code>include</code>, and Raycast/Alfred import</li>
+        </ul>
+      </div>
     </div>
+  </section>
+
+  <section id="plugins">
+    <h2>Plugins are just scripts</h2>
+    <p class="sub">A folder with a <code>plugin.toml</code> and a script in any language that prints one JSON object per line.
+      No SDK, no build step, no store. Save it and it's in the bar.</p>
+    <div class="two">
+      <pre><span class="c"># ~/.config/euclid/plugins/tokens/plugin.toml</span>
+name = "Claude tokens"
+
+<span class="k">[badge]</span>                     <span class="c"># a chip on the search bar</span>
+run   = "./today.sh"        <span class="c"># prints "1.2M tok · $4.10"</span>
+refresh_minutes = 5
+click = 'ghostty-run tab npx -y ccusage@latest daily'</pre>
+      <ul class="plain">
+        <li><b><code>[source]</code></b> adds items to search, refreshed in the background.</li>
+        <li><b><code>[answer]</code></b> replies to what you type, on a prefix or a regex.</li>
+        <li><b><code>[badge]</code></b> puts a live status on the bar.</li>
+        <li><b><code>[[action]]</code></b> adds commands to <code>⌘K</code>.</li>
+        <li><b>Let your AI write one.</b> The format ships as <code>AGENTS.md</code>: ask Claude Code or Codex, check it with <code>--try-plugin</code>.</li>
+      </ul>
+    </div>
+    <p class="fine" style="margin-top:22px">Ready to add, one command each:</p>
+    <div class="chips">
+      <code>github</code><code>linear</code><code>slack</code><code>tokens</code><code>currency</code><code>define</code><code>contacts</code><code>shortcuts</code>
+    </div>
+    <pre class="oneline">euclid-bar --plugin add github</pre>
+    <p class="fine"><a href="plugins/">Browse plugins and starter prompts →</a></p>
   </section>
 
   <section id="recipes">
