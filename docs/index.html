@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Euclid: the shortest path from thought to command</title>
-<meta name="description" content="A native macOS launcher for developers. Every action is a shell command in a TOML file. Searches 10,000 items in under a millisecond. Private and local. Free for personal use during the beta.">
+<meta name="description" content="A native macOS launcher for developers. Every action is a shell command in a TOML file. Searches 10,000 items in 1.4 ms, offline, with no AI lock-in. Private and local. Free for personal use during the beta.">
 <meta property="og:title" content="Euclid: the shortest path from thought to command">
-<meta property="og:description" content="A native macOS launcher where every action is a shell command. Sub-millisecond search, private, free during the beta.">
+<meta property="og:description" content="A native macOS launcher where every action is a shell command. 10,000 items searched in 1.4 ms, offline, free during the beta.">
 <meta property="og:image" content="https://euclid.lgtmworks.com/poster.jpg">
 <meta property="og:url" content="https://euclid.lgtmworks.com/">
 <link rel="canonical" href="https://euclid.lgtmworks.com/">
@@ -21,6 +21,7 @@
     <span>Euclid</span>
     <div class="links">
       <a href="#why">Why</a>
+      <a href="#offline">Privacy</a>
       <a href="recipes/">Recipes</a>
       <a href="#pricing">Pricing</a>
     </div>
@@ -30,7 +31,7 @@
     <img class="icon" src="icon.png" alt="Euclid app icon">
     <h1>The shortest path from <br>thought to command.</h1>
     <p class="lead">A native macOS launcher for developers. Press <kbd>⌥Space</kbd>, type, hit <kbd>↵</kbd>.
-      Every action is a shell command in your dotfiles. No SDK, no account, no subscription.</p>
+      Instant, offline, and configured in one TOML file you can read top to bottom.</p>
     <div class="cta">
       <a class="btn primary" href="https://github.com/stellalie/euclid-bar-releases/releases/tag/dev">Download for macOS</a>
       <a class="btn" href="#pricing">Pricing</a>
@@ -41,31 +42,79 @@
       <video src="demo.mp4" poster="poster.jpg" autoplay muted loop playsinline
              aria-label="Euclid searching apps, clipboard and history, then sending a question to an AI agent"></video>
     </div>
-    <div class="speed"><b>12,431</b> items · <b>0.6 ms</b></div>
+    <div class="speed"><b>10,000</b> items · <b>1.4 ms</b> worst case</div>
   </header>
+
+  <section id="numbers">
+    <div class="stats">
+      <div><b>1.4 ms</b><span>worst-case search over 10,000 items</span></div>
+      <div><b>9 ms</b><span>to show the panel (median)</span></div>
+      <div><b>54 MB</b><span>memory at idle, 0% CPU</span></div>
+      <div><b>0</b><span>accounts, trackers or cloud syncs</span></div>
+    </div>
+    <p class="fine">Release build on a GitHub Actions macOS runner, 25 October 2026.
+      <a href="https://github.com/stellalie/euclid-bar-releases/blob/main/PERF.md">How we measure</a>.
+      The footer in the app shows the same timing on every search.</p>
+  </section>
 
   <section id="why">
     <h2>Why Euclid</h2>
-    <p class="sub">Not another extension store. A sharp tool you configure like the rest of your setup.</p>
+    <p class="sub">Not another extension store or AI subscription. A sharp tool you configure like the rest of your setup.</p>
     <div class="grid">
       <div class="card">
-        <div class="num">01 · config as code</div>
-        <h3>Every action is one shell line</h3>
-        <p>Actions live in <code>~/.config/euclid/config.toml</code>, reload on save, and pass
-          <code>--check-config</code> in CI. If it runs in your terminal, it's an action.</p>
+        <div class="num">01 · lightning fast</div>
+        <h3>Native Swift, no web views</h3>
+        <p>No Electron and no JavaScript runtime. Results update on every keystroke, and the footer
+          tells you how long it took.</p>
       </div>
       <div class="card">
-        <div class="num">02 · agent launcher</div>
-        <h3>Ask your agent in one keystroke</h3>
-        <p>Type a question, press <kbd>⌘↵</kbd>. Claude Code, Codex or pi opens in a new Ghostty tab
-          or herdr split with your prompt already in.</p>
+        <div class="num">02 · no AI lock-in</div>
+        <h3>Your agent, your model, your key</h3>
+        <p>AI is just another action. Hand a question to Claude Code, Codex, or a local model through
+          Ollama, in one keystroke. No Euclid AI plan, and none of it is required.</p>
       </div>
       <div class="card">
-        <div class="num">03 · fast and local</div>
-        <h3>Native Swift, nothing leaves your Mac</h3>
-        <p>10,000 items searched in under 1 ms. Opens in ~20 ms, idles at ~30 MB.
-          Password-manager copies are never recorded.</p>
+        <div class="num">03 · offline by design</div>
+        <h3>Nothing leaves your Mac</h3>
+        <p>Your clipboard, history and index stay on disk. No account, no telemetry, and the licence
+          is checked offline. <a href="#offline">Every network call, listed.</a></p>
       </div>
+      <div class="card">
+        <div class="num">04 · transparent config</div>
+        <h3>One TOML file, nothing hidden</h3>
+        <p>Every action is one shell line you can read in <code>~/.config/euclid/config.toml</code>.
+          It reloads on save and <code>--check-config</code> lints it in CI.</p>
+      </div>
+      <div class="card">
+        <div class="num">05 · extensible</div>
+        <h3>If it runs in a terminal, it's an action</h3>
+        <p>Scripts in <code>~/.config/euclid/bin</code> are on every action's PATH. Share a team config,
+          import Raycast and Alfred snippets, and let agents search Euclid over MCP.</p>
+      </div>
+      <div class="card">
+        <div class="num">06 · everything optional</div>
+        <h3>Switch off what you don't use</h3>
+        <p>Clipboard, browser history, files, notes, integrations, update checks: each is one line
+          in the config. Page indexing stays off until you turn it on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="offline">
+    <h2>Where your data goes</h2>
+    <p class="sub">Euclid works with the network unplugged. These are the only times it goes online.</p>
+    <div class="two">
+      <ul class="plain">
+        <li><b>Update checks</b> ask GitHub for the latest version. Turn them off with <code>[updates] check = false</code>.</li>
+        <li><b>Bitbucket and Jira</b>, only if you set them up, talk straight to your own server, with a token your own command fetches (Keychain, 1Password CLI).</li>
+        <li><b>Page indexing</b>, off by default, fetches pages you already visited so you can search their text.</li>
+        <li><b>Your actions</b> do whatever their shell line says, nothing more.</li>
+      </ul>
+      <ul class="plain">
+        <li><b>Never sent anywhere:</b> what you type, your clipboard, your history, your files, your usage counts.</li>
+        <li><b>Password managers:</b> copies from 1Password and friends are never recorded.</li>
+        <li><b>This website</b> counts page views with cookie-free Cloudflare Web Analytics. The app has no analytics at all.</li>
+      </ul>
     </div>
   </section>
 
@@ -99,6 +148,10 @@ run  = 'ghostty-run tab claude "$1"'
 <span class="k">[[action]]</span>                                   <span class="c"># ⌘2</span>
 name = "Codex in a herdr split"
 run  = 'herdr-run split codex "$1"'
+
+<span class="k">[[action]]</span>                                   <span class="c"># a local model, no API key</span>
+name = "Ask Llama on this Mac"
+run  = 'ghostty-run tab ollama run llama3.2 "$1"'
 
 <span class="k">[[action]]</span>
 name  = "Search GitHub code"
