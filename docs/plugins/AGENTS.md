@@ -1,7 +1,7 @@
 # Euclid plugins
 
 > This is the plugin guide Euclid installs at `~/.config/euclid/plugins/AGENTS.md`, published for coding agents.
-> Source: https://euclid.lgtmworks.com/plugins/AGENTS.md
+> Source: https://euclid.lgtm.ninja/plugins/AGENTS.md
 
 A plugin is a folder here with a `plugin.toml` and the scripts it runs. Euclid reloads it when
 you save, so write it, try it, and it's live. This file is the whole format.

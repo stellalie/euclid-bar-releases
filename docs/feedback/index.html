@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Feedback · Euclid</title>
 <meta name="description" content="Report a bug, ask for a feature or tell us what you think of Euclid.">
-<link rel="canonical" href="https://euclid.lgtmworks.com/feedback/">
+<link rel="canonical" href="https://euclid.lgtm.ninja/feedback/">
 <link rel="icon" href="../icon.png">
 <link rel="stylesheet" href="../style.css">
 </head>
@@ -13,7 +13,7 @@
 <div class="wrap">
   <nav>
     <a href="../" style="display:flex;align-items:center;gap:10px;text-decoration:none"><img src="../icon.png" alt=""><span>Euclid</span></a>
-    <a class="maker" href="https://lgtmworks.com/">by lgtm works</a>
+    <a class="maker" href="https://lgtm.ninja/">by lgtm works</a>
     <div class="links">
       <a href="../#why">Why</a>
       <a href="../features/">Features</a>
@@ -48,17 +48,17 @@
         <button class="btn primary" type="submit" name="via" value="email">Send by email</button>
         <button class="btn" type="submit" name="via" value="github">Post a public GitHub issue</button>
       </div>
-      <p class="fine">Email opens your mail app with this filled in and goes privately to <a href="mailto:hello@lgtmworks.com">hello@lgtmworks.com</a>. GitHub posts it in the open on <a href="https://github.com/stellalie/euclid-bar-releases/issues">euclid-bar-releases</a> (needs a GitHub account). Nothing is sent from this page.</p>
+      <p class="fine">Email opens your mail app with this filled in and goes privately to <a href="mailto:hello@lgtm.ninja">hello@lgtm.ninja</a>. GitHub posts it in the open on <a href="https://github.com/stellalie/euclid-bar-releases/issues">euclid-bar-releases</a> (needs a GitHub account). Nothing is sent from this page.</p>
     </form>
   </article>
 
   <footer>
-    <span>© 2026 <a href="https://lgtmworks.com/">LGTM Works</a> · Made in Sydney</span>
+    <span>© 2026 <a href="https://lgtm.ninja/">LGTM Works</a> · Made in Sydney</span>
     <a href="../terms/">Terms</a>
     <a href="../privacy/">Privacy</a>
     <a href="../refunds/">Refunds</a>
     <a href="./">Feedback</a>
-    <a href="mailto:hello@lgtmworks.com">hello@lgtmworks.com</a>
+    <a href="mailto:hello@lgtm.ninja">hello@lgtm.ninja</a>
   </footer>
 </div>
 <script>
@@ -83,7 +83,7 @@
     const enc = encodeURIComponent;
     location.href = e.submitter && e.submitter.value === "github"
       ? `https://github.com/stellalie/euclid-bar-releases/issues/new?title=${enc(title)}&body=${enc(body)}`
-      : `mailto:hello@lgtmworks.com?subject=${enc("Euclid feedback: " + title)}&body=${enc(body)}`;
+      : `mailto:hello@lgtm.ninja?subject=${enc("Euclid feedback: " + title)}&body=${enc(body)}`;
   });
 </script>
 <!-- Cloudflare Web Analytics: cookie-free page views -->

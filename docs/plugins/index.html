@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Euclid plugins and actions: extend it in any language</title>
 <meta name="description" content="Extend Euclid two ways: paste a one-line action into your TOML config, or add a plugin (a folder with a script that prints JSON lines) in one command. GitHub, Linear, Slack, AI agents and more.">
-<link rel="canonical" href="https://euclid.lgtmworks.com/plugins/">
+<link rel="canonical" href="https://euclid.lgtm.ninja/plugins/">
 <link rel="icon" href="../icon.png">
 <link rel="stylesheet" href="../style.css">
 </head>
@@ -13,7 +13,7 @@
 <div class="wrap">
   <nav>
     <a href="../" style="display:flex;align-items:center;gap:10px;text-decoration:none"><img src="../icon.png" alt=""><span>Euclid</span></a>
-    <a class="maker" href="https://lgtmworks.com/">by lgtm works</a>
+    <a class="maker" href="https://lgtm.ninja/">by lgtm works</a>
     <div class="links">
       <a href="../#why">Why</a>
       <a href="../features/">Features</a>
@@ -664,12 +664,12 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
   </section>
 
   <footer>
-    <span>© 2026 <a href="https://lgtmworks.com/">LGTM Works</a> · Made in Sydney</span>
+    <span>© 2026 <a href="https://lgtm.ninja/">LGTM Works</a> · Made in Sydney</span>
     <a href="../terms/">Terms</a>
     <a href="../privacy/">Privacy</a>
     <a href="../refunds/">Refunds</a>
     <a href="../feedback/">Feedback</a>
-    <a href="mailto:hello@lgtmworks.com">hello@lgtmworks.com</a>
+    <a href="mailto:hello@lgtm.ninja">hello@lgtm.ninja</a>
     <a href="../">Home</a>
     <span>For people who live in the terminal.</span>
   </footer>
@@ -678,7 +678,7 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
 <dialog id="submit" aria-labelledby="submit-title">
   <form method="dialog" class="feedback">
     <h2 id="submit-title">Share an action or plugin</h2>
-    <p class="fine">This opens an email to hello@lgtmworks.com in your mail app. Nothing is sent until you press Send there.</p>
+    <p class="fine">This opens an email to hello@lgtm.ninja in your mail app. Nothing is sent until you press Send there.</p>
     <label>What it does <input name="title" required placeholder="Open the current branch's PR"></label>
     <label>The action's TOML, or a link to the plugin's repo <textarea name="toml" rows="6" required spellcheck="false" placeholder='[[action]]&#10;name = "…"&#10;run  = &#39;…&#39;&#10;&#10;or https://github.com/you/euclid-plugin-…'></textarea></label>
     <label>Anything it needs <input name="needs" placeholder="the gh CLI, Ghostty…"></label>
@@ -696,7 +696,7 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
     if (dlg.returnValue !== 'send') return;
     const f = new FormData(dlg.querySelector('form'));
     const body = [f.get('title'), '', f.get('toml'), '', 'Needs: ' + (f.get('needs') || '-'), 'Credit: ' + (f.get('credit') || '-')].join('\n');
-    location.href = 'mailto:hello@lgtmworks.com?subject=' + encodeURIComponent('Shared: ' + f.get('title')) + '&body=' + encodeURIComponent(body);
+    location.href = 'mailto:hello@lgtm.ninja?subject=' + encodeURIComponent('Shared: ' + f.get('title')) + '&body=' + encodeURIComponent(body);
   });
   for (const b of document.querySelectorAll('.copy')) {
     b.addEventListener('click', async () => {
@@ -740,7 +740,7 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
   const copyBtn = out.querySelector('.copy');
   function prompt() {
     const w = want.value.trim().replace(/\.$/, '') || 'does what I describe';
-    return `Read https://euclid.lgtmworks.com/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
+    return `Read https://euclid.lgtm.ninja/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
 Then make a Euclid plugin in ~/.config/euclid/plugins/ that ${w}.
 Pick a short id for the folder. Keep secrets in the Keychain, never in plugin.toml.
 Run /Applications/Euclid.app/Contents/MacOS/euclid-bar --try-plugin <id>
@@ -757,7 +757,7 @@ and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
   const screen = document.getElementById('agentScreen');
   const script = [
     ['you', '> make a Euclid plugin that shows my 20 most recent Vercel deployments'],
-    ['dim', '  Reading euclid.lgtmworks.com/plugins/AGENTS.md'],
+    ['dim', '  Reading euclid.lgtm.ninja/plugins/AGENTS.md'],
     ['ok',  '  ✓ Wrote ~/.config/euclid/plugins/vercel/plugin.toml'],
     ['code','      [source]  run = "./items.sh"  refresh_minutes = 5'],
     ['ok',  '  ✓ Wrote items.sh  (vercel ls --json | jq → one row per deploy)'],

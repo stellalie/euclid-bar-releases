@@ -7,9 +7,9 @@
 <meta name="description" content="A native macOS launcher for developers. Every action is a shell command in a TOML file. Searches 10,000 items in 1.4 ms, offline, with no AI lock-in. Private and local. Free for personal use during the beta.">
 <meta property="og:title" content="Euclid: the shortest path from thought to command">
 <meta property="og:description" content="A native macOS launcher where every action is a shell command. 10,000 items searched in 1.4 ms, offline, free during the beta.">
-<meta property="og:image" content="https://euclid.lgtmworks.com/poster.jpg">
-<meta property="og:url" content="https://euclid.lgtmworks.com/">
-<link rel="canonical" href="https://euclid.lgtmworks.com/">
+<meta property="og:image" content="https://euclid.lgtm.ninja/poster.jpg">
+<meta property="og:url" content="https://euclid.lgtm.ninja/">
+<link rel="canonical" href="https://euclid.lgtm.ninja/">
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -19,7 +19,7 @@
   <nav>
     <img src="icon.png" alt="">
     <span>Euclid</span>
-    <a class="maker" href="https://lgtmworks.com/">by lgtm works</a>
+    <a class="maker" href="https://lgtm.ninja/">by lgtm works</a>
     <div class="links">
       <a href="#why">Why</a>
       <a href="#features">Features</a>
@@ -320,12 +320,12 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
   </section>
 
   <footer>
-    <span>© 2026 <a href="https://lgtmworks.com/">LGTM Works</a> · Made in Sydney</span>
+    <span>© 2026 <a href="https://lgtm.ninja/">LGTM Works</a> · Made in Sydney</span>
     <a href="terms/">Terms</a>
     <a href="privacy/">Privacy</a>
     <a href="refunds/">Refunds</a>
     <a href="feedback/">Feedback</a>
-    <a href="mailto:hello@lgtmworks.com">hello@lgtmworks.com</a>
+    <a href="mailto:hello@lgtm.ninja">hello@lgtm.ninja</a>
     <a href="https://github.com/stellalie/euclid-bar-releases/releases">Release notes</a>
     <span>For people who live in the terminal.</span>
   </footer>
@@ -343,7 +343,7 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
   for (const b of document.querySelectorAll("[data-price]")) {
     b.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!PADDLE_TOKEN || !window.Paddle) { location.href = "mailto:hello@lgtmworks.com?subject=Buying%20Euclid"; return; }
+      if (!PADDLE_TOKEN || !window.Paddle) { location.href = "mailto:hello@lgtm.ninja?subject=Buying%20Euclid"; return; }
       Paddle.Checkout.open({ items: [PRICES[b.dataset.price]] });
     });
   }
@@ -363,7 +363,7 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
   const copyBtn = out.querySelector('.copy');
   function prompt() {
     const w = want.value.trim().replace(/\.$/, '') || 'does what I describe';
-    return `Read https://euclid.lgtmworks.com/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
+    return `Read https://euclid.lgtm.ninja/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
 Then make a Euclid plugin in ~/.config/euclid/plugins/ that ${w}.
 Pick a short id for the folder. Keep secrets in the Keychain, never in plugin.toml.
 Run /Applications/Euclid.app/Contents/MacOS/euclid-bar --try-plugin <id>
@@ -380,7 +380,7 @@ and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
   const screen = document.getElementById('agentScreen');
   const script = [
     ['you', '> make a Euclid plugin that shows my 20 most recent Vercel deployments'],
-    ['dim', '  Reading euclid.lgtmworks.com/plugins/AGENTS.md'],
+    ['dim', '  Reading euclid.lgtm.ninja/plugins/AGENTS.md'],
     ['ok',  '  ✓ Wrote ~/.config/euclid/plugins/vercel/plugin.toml'],
     ['code','      [source]  run = "./items.sh"  refresh_minutes = 5'],
     ['ok',  '  ✓ Wrote items.sh  (vercel ls --json | jq → one row per deploy)'],
