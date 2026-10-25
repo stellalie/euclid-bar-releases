@@ -6,7 +6,7 @@ any CLI as an action.
 ## Download
 
 **[Download the latest version](https://github.com/stellalie/euclid-bar-releases/releases/latest)**
-(`euclid-bar-<version>.dmg`, macOS 14+, Apple Silicon + Intel).
+(`Euclid-<version>.dmg`, macOS 14+, Apple Silicon + Intel).
 
 1. Open the DMG and drag **euclid-bar** into **Applications**.
 2. Launch it and press **⌥Space**.
