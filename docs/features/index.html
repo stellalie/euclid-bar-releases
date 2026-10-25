@@ -33,6 +33,7 @@
   <section class="flist" id="search">
     <h2>Search</h2>
     <p class="sub">One box, fuzzy-matched, grouped into sections. Matched letters are highlighted and the list never reshuffles under your cursor.</p>
+    <video class="clip" src="../clips/search-sections.mp4" poster="../clips/search-sections.jpg" muted loop playsinline preload="none" aria-label="search in the Euclid panel"></video>
     <table>
         <tr><th>Apps</th><td>/Applications, /System/Applications, ~/Applications and any folders you add</td></tr>
         <tr><th>Git projects</th><td>Repos under your code folders. <kbd>↵</kbd> opens them in your editor</td></tr>
@@ -53,6 +54,7 @@
   <section class="flist" id="answers-as-you-type">
     <h2>Answers as you type</h2>
     <p class="sub"><kbd>↵</kbd> copies the answer.</p>
+    <video class="clip" src="../clips/epoch.mp4" poster="../clips/epoch.jpg" muted loop playsinline preload="none" aria-label="answers as you type in the Euclid panel"></video>
     <table>
         <tr><th>Calculator and units</th><td><code>12 * 3.5</code> · <code>1.5 gb in mb</code> · <code>72 f in c</code></td></tr>
         <tr><th>Epoch ⇄ date</th><td><code>1697040000</code> · <code>2023-10-11T16:00:00Z</code> · <code>now</code></td></tr>
@@ -68,6 +70,7 @@
   <section class="flist" id="plugins">
     <h2>Plugins</h2>
     <p class="sub">Add only what you use: <code>euclid-bar --plugin add &lt;name&gt;</code>. They cost nothing until you add one.</p>
+    <video class="clip" src="../clips/plugins.mp4" poster="../clips/plugins.jpg" muted loop playsinline preload="none" aria-label="plugins in the Euclid panel"></video>
     <table>
         <tr><th>github <em class="tag-plugin">plugin</em></th><td>Your PRs, review requests and issues, through the <code>gh</code> CLI</td></tr>
         <tr><th>linear <em class="tag-plugin">plugin</em></th><td>Linear issues assigned to you</td></tr>
@@ -86,6 +89,7 @@
   <section class="flist" id="actions-and-keys">
     <h2>Actions and keys</h2>
     <p class="sub">Every action is one shell line in your config.</p>
+    <video class="clip" src="../clips/no-match-actions.mp4" poster="../clips/no-match-actions.jpg" muted loop playsinline preload="none" aria-label="actions and keys in the Euclid panel"></video>
     <table>
         <tr><th>Actions</th><td>Run any command on what you typed. Your query arrives as <code>$1</code>, passed as an argument, never pasted into the command</td></tr>
         <tr><th>Action shortcuts</th><td><kbd>⌘↵</kbd> runs your first action, <kbd>⌘1</kbd>–<kbd>⌘9</kbd> run the rest</td></tr>
@@ -101,6 +105,7 @@
   <section class="flist" id="without-opening-the-panel">
     <h2>Without opening the panel</h2>
     
+    <video class="clip" src="../clips/expansion.mp4" poster="../clips/expansion.jpg" muted loop playsinline preload="none" aria-label="without opening the panel in the Euclid panel"></video>
     <table>
         <tr><th>Text expansion <em>opt-in</em></th><td>Type a snippet's keyword in any app and it turns into the snippet. Needs Accessibility</td></tr>
         <tr><th>Per-command hotkeys</th><td>Give any app, project, action or snippet its own hotkey in <code>[hotkeys]</code>. Its row shows it</td></tr>
@@ -136,6 +141,7 @@
   <section class="flist" id="look-and-feel">
     <h2>Look and feel</h2>
     
+    <video class="clip" src="../clips/compact-accent.mp4" poster="../clips/compact-accent.jpg" muted loop playsinline preload="none" aria-label="look and feel in the Euclid panel"></video>
     <table>
         <tr><th>Native and light</th><td>Swift and AppKit. No Electron, no web views</td></tr>
         <tr><th>Liquid Glass</th><td>On macOS 26, switchable with <code>glass = false</code></td></tr>
@@ -159,6 +165,7 @@
   <section class="flist" id="updates-and-licence">
     <h2>Updates and licence</h2>
     
+    <video class="clip" src="../clips/updates.mp4" poster="../clips/updates.jpg" muted loop playsinline preload="none" aria-label="updates and licence in the Euclid panel"></video>
     <table>
         <tr><th>Auto-update</th><td>Signed and notarized updates, installed in the background. A menu toggle turns it off</td></tr>
         <tr><th>Dev channel</th><td><code>channel = "dev"</code> gets a build of every change</td></tr>
@@ -186,6 +193,14 @@
     <span>For people who live in the terminal.</span>
   </footer>
 </div>
+<script>
+  // Clips play only while on screen.
+  const clipObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause();
+  }, { threshold: 0.4 });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+    for (const v of document.querySelectorAll('video.clip')) clipObserver.observe(v);
+</script>
 <!-- Cloudflare Web Analytics: cookie-free page views -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "153c6065866e4bef9595b3c0df2fc248"}'></script>
 </body>
