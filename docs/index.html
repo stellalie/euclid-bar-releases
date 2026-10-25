@@ -210,6 +210,29 @@
     <p class="fine"><a href="features/">See the complete feature list →</a></p>
   </section>
 
+  <section id="agent">
+    <h2>Describe a plugin. Your agent builds it.</h2>
+    <p class="sub">Say what you want in plain words. Paste the prompt into Claude Code, Codex or any agent with a shell.
+      It reads the guide, writes the plugin, tests it with <code>--try-plugin</code>, and it shows up in the bar on save.</p>
+    <div class="builder">
+      <div class="agentdemo" aria-label="Illustration: an agent builds a Vercel plugin" role="img">
+        <div class="bar"><i></i><i></i><i></i><span>your agent</span></div>
+        <div class="screen" id="agentScreen"></div>
+      </div>
+      <div class="ask">
+        <h3>1. Describe what you want</h3>
+        <textarea id="want" rows="3" spellcheck="false">shows my 20 most recent Vercel deployments, with project, state and age, and opens each one</textarea>
+        <h3>2. Copy the prompt into Claude Code, Codex or any agent with a shell</h3>
+        <pre class="prompt" id="promptOut"><button class="copy" type="button">Copy</button></pre>
+        <p class="fine">The prompt points at the <a href="plugins/AGENTS.md">plugin guide</a>, the whole format on one page.
+          Euclid also keeps a copy at <code>~/.config/euclid/plugins/AGENTS.md</code>.
+          Agent without web access? <button type="button" class="linkish" id="copyGuide">Copy the guide</button> and paste it in first.</p>
+      </div>
+    </div>
+
+    <p class="fine"><a href="plugins/#vibe">More prompts and how it works →</a></p>
+  </section>
+
   <section id="plugins">
     <h2>Plugins are just scripts</h2>
     <p class="sub">A folder with a <code>plugin.toml</code> and a script in any language that prints one JSON object per line.
@@ -324,6 +347,73 @@ run  = 'printf %s "$1" | jq . | pbcopy'</pre>
       Paddle.Checkout.open({ items: [PRICES[b.dataset.price]] });
     });
   }
+</script>
+<script>
+  for (const b of document.querySelectorAll('.copy')) {
+    b.addEventListener('click', async () => {
+      const text = b.parentElement.textContent.replace(/^Copy(ed)?/, '');
+      try { await navigator.clipboard.writeText(text); b.textContent = 'Copied'; } catch { b.textContent = 'Select + ⌘C'; }
+      setTimeout(() => (b.textContent = 'Copy'), 1500);
+    });
+  }
+</script>
+<script>
+  // Prompt builder: what you want → a prompt for your agent.
+  const want = document.getElementById('want'), out = document.getElementById('promptOut');
+  const copyBtn = out.querySelector('.copy');
+  function prompt() {
+    const w = want.value.trim().replace(/\.$/, '') || 'does what I describe';
+    return `Read https://euclid.lgtmworks.com/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
+Then make a Euclid plugin in ~/.config/euclid/plugins/ that ${w}.
+Pick a short id for the folder. Keep secrets in the Keychain, never in plugin.toml.
+Run /Applications/Euclid.app/Contents/MacOS/euclid-bar --try-plugin <id>
+and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
+  }
+  function render() { out.textContent = ''; out.append(copyBtn, prompt()); }
+  want.addEventListener('input', render); render();
+  document.getElementById('copyGuide').addEventListener('click', async (e) => {
+    try { await navigator.clipboard.writeText(await (await fetch('plugins/AGENTS.md')).text()); e.target.textContent = 'Copied the guide'; }
+    catch { location.href = 'plugins/AGENTS.md'; }
+  });
+
+  // The agent demo: a scripted illustration, typed out line by line.
+  const screen = document.getElementById('agentScreen');
+  const script = [
+    ['you', '> make a Euclid plugin that shows my 20 most recent Vercel deployments'],
+    ['dim', '  Reading euclid.lgtmworks.com/plugins/AGENTS.md'],
+    ['ok',  '  ✓ Wrote ~/.config/euclid/plugins/vercel/plugin.toml'],
+    ['code','      [source]  run = "./items.sh"  refresh_minutes = 5'],
+    ['ok',  '  ✓ Wrote items.sh  (vercel ls --json | jq → one row per deploy)'],
+    ['dim', '  $ euclid-bar --try-plugin vercel'],
+    ['err', '    items.sh: jq: error: null (null) has no keys'],
+    ['dim', '  Fixing: deployments live under .deployments'],
+    ['dim', '  $ euclid-bar --try-plugin vercel'],
+    ['ok',  '    OK · source: 20 rows in 0.41 s'],
+    ['done','  Done. Open Euclid (⌥Space) and type "deploy".'],
+    ['bar', ''],
+  ];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  async function play() {
+    screen.textContent = '';
+    for (const [kind, text] of script) {
+      const line = document.createElement('div');
+      line.className = 'l ' + kind;
+      screen.append(line);
+      if (kind === 'bar') {
+        line.innerHTML = '<div class="mini"><div class="q">deploy<span class="caret"></span></div>'
+          + '<div class="r sel"><b>web</b> · Ready · 3m ago<span>Vercel</span></div>'
+          + '<div class="r"><b>docs</b> · Building · 1m ago<span>Vercel</span></div>'
+          + '<div class="r"><b>api</b> · Error · 12m ago<span>Vercel</span></div></div>';
+        continue;
+      }
+      if (reduce || kind !== 'you') { line.textContent = text; await wait(reduce ? 0 : 420); continue; }
+      for (let i = 1; i <= text.length; i++) { line.textContent = text.slice(0, i); await wait(18); }
+      await wait(400);
+    }
+    if (!reduce) { await wait(5000); play(); }
+  }
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); play(); } }).observe(screen);
 </script>
 <!-- Cloudflare Web Analytics: cookie-free page views -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "153c6065866e4bef9595b3c0df2fc248"}'></script>
