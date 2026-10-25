@@ -1,6 +1,6 @@
 # How Euclid's speed numbers are measured
 
-The numbers on [euclid.lgtm.ninja](https://euclid.lgtm.ninja) come from a release build
+The numbers on [lgtm.ninja/euclid](https://lgtm.ninja/euclid/) come from a release build
 on a GitHub Actions macOS runner (macOS 15.7, Apple M1, virtual), run on 25 October 2026.
 
 | Number | What it is |
