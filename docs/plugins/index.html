@@ -155,6 +155,7 @@ Test with euclid-bar --try-plugin runbooks until it prints OK.</pre>
       <code>~/.config/euclid/plugins/&lt;name&gt;/</code>, then change however you like.</p>
     <div class="recipes">
       <article class="recipe">
+        <video class="clip" src="../clips/plugins.mp4" poster="../clips/plugins.jpg" muted loop playsinline preload="none" aria-label="The GitHub plugin in the Euclid panel"></video>
         <header><h3>GitHub</h3><span class="cat">Source</span></header>
         <p>Your open PRs, PRs waiting on your review, and issues assigned to you. Uses the <code>gh</code> CLI, so there's no token to manage.</p>
         <p class="example">Type <code>fix login</code> → your PR “Fix login on Safari” with a <b>Review</b> label.</p>
@@ -189,6 +190,7 @@ gh search issues --assignee=@me --state=open --limit &quot;$limit&quot; --json n
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-linear.mp4" poster="../clips/plugin-linear.jpg" muted loop playsinline preload="none" aria-label="The Linear plugin in the Euclid panel"></video>
         <header><h3>Linear</h3><span class="cat">Source</span></header>
         <p>Linear issues assigned to you and not done. <kbd>↵</kbd> opens one, <kbd>⌘C</kbd> copies its ID. The API key lives in the Keychain.</p>
         <p class="example">Type <code>eng-</code> → your open Linear issues, newest first.</p>
@@ -221,6 +223,7 @@ jq -n --arg q &quot;$query&quot; --argjson n &quot;${EUCLID_SETTING_LIMIT:-50}&q
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-slack.mp4" poster="../clips/plugin-slack.jpg" muted loop playsinline preload="none" aria-label="The Slack plugin in the Euclid panel"></video>
         <header><h3>Slack</h3><span class="cat">Source + answer</span></header>
         <p>Jump to any channel you're in, and type <code>slack deploy failed</code> to search messages. Needs a user token.</p>
         <p class="example">Type <code>slack deploy failed</code> → the 10 best matching messages.</p>
@@ -263,6 +266,7 @@ curl -fsS -H &quot;Authorization: Bearer $token&quot; &quot;https://slack.com/ap
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-tokens.mp4" poster="../clips/plugin-tokens.jpg" muted loop playsinline preload="none" aria-label="The Claude tokens plugin in the Euclid panel"></video>
         <header><h3>Claude tokens</h3><span class="cat">Badge</span></header>
         <p>Today's Claude Code tokens and cost on the search bar, from <code>ccusage</code>. Click it for the full report in a terminal.</p>
         <p class="example">Always on the bar: <code>1.2M tok · $4.10</code>. Click it for the full report.</p>
@@ -289,6 +293,7 @@ if command -v ccusage &gt;/dev/null 2&gt;&amp;1; then set -- ccusage; else set -
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-contacts.mp4" poster="../clips/plugin-contacts.jpg" muted loop playsinline preload="none" aria-label="The Contacts plugin in the Euclid panel"></video>
         <header><h3>Contacts</h3><span class="cat">Source</span></header>
         <p>People by name, company, email or phone. <kbd>↵</kbd> opens the card, <kbd>⌘C</kbd> copies the email. macOS asks once for access.</p>
         <p class="example">Type <code>ada</code> → Ada Lovelace · Analytical Engines · ada@example.com.</p>
@@ -318,6 +323,7 @@ function run() {
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-shortcuts.mp4" poster="../clips/plugin-shortcuts.jpg" muted loop playsinline preload="none" aria-label="The Shortcuts plugin in the Euclid panel"></video>
         <header><h3>Shortcuts</h3><span class="cat">Source + action</span></header>
         <p>Every shortcut from the Shortcuts app, by name. <kbd>↵</kbd> runs it through the <code>shortcuts</code> CLI.</p>
         <p class="example">Type <code>water</code> → your “Log water” shortcut; <kbd>↵</kbd> runs it.</p>
@@ -342,6 +348,7 @@ shortcuts list | jq -Rc &#x27;select(length &gt; 0)
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-define.mp4" poster="../clips/plugin-define.jpg" muted loop playsinline preload="none" aria-label="The Dictionary plugin in the Euclid panel"></video>
         <header><h3>Dictionary</h3><span class="cat">Answer</span></header>
         <p>Type <code>define serendipity</code> for the macOS Dictionary's definition. <kbd>↵</kbd> opens Dictionary, <kbd>⌘C</kbd> copies it.</p>
         <p class="example">Type <code>define serendipity</code> → the definition, right in the bar.</p>
@@ -370,6 +377,7 @@ function run(argv) {
         </details>
       </article>
       <article class="recipe">
+        <video class="clip" src="../clips/plugin-currency.mp4" poster="../clips/plugin-currency.jpg" muted loop playsinline preload="none" aria-label="The Currency plugin in the Euclid panel"></video>
         <header><h3>Currency</h3><span class="cat">Answer</span></header>
         <p>Type <code>100 usd to eur</code>. Daily rates from a free API, no key, cached for an hour. <kbd>↵</kbd> copies the amount.</p>
         <p class="example">Type <code>100 usd to eur</code> → the amount in euros at today's rate; <kbd>↵</kbd> copies it.</p>
@@ -783,6 +791,14 @@ and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
   }
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); play(); } }).observe(screen);
+</script>
+<script>
+  // Clips play only while on screen.
+  const clipObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause();
+  }, { threshold: 0.4 });
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+    for (const v of document.querySelectorAll('video.clip')) clipObserver.observe(v);
 </script>
 <!-- Cloudflare Web Analytics: cookie-free page views -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "153c6065866e4bef9595b3c0df2fc248"}'></script>

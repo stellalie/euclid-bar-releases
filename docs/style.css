@@ -303,3 +303,7 @@ figure.shot code { color: var(--code); font-size: .9em; }
 .ask pre.prompt { position: relative; white-space: pre-wrap; font-size: 13px; padding-right: 70px; }
 .ask pre.prompt .copy { position: absolute; top: 8px; right: 8px; font: inherit; font-size: 12px; cursor: pointer; padding: 3px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--muted); }
 @media (max-width: 760px) { .builder { grid-template-columns: minmax(0, 1fr); } .agentdemo .screen { min-height: 300px; } }
+
+/* Feature and plugin clips */
+video.clip { display: block; width: 100%; height: auto; aspect-ratio: 1240 / 680; border-radius: 10px; border: 1px solid var(--line); background: #1d1530; margin: 0 0 14px; }
+.flist video.clip { max-width: 720px; border-radius: 14px; }
