@@ -39,8 +39,8 @@
   <div role="tabpanel" id="plugins" aria-labelledby="tab-plugins">
   <section class="panel-top">
     <div class="jump">
+      <a href="#vibe">Build with your agent</a>
       <a href="#directory">Directory</a>
-      <a href="#vibe">Vibe-code one</a>
       <a href="#how">How plugins work</a>
       <a href="#share">Share one</a>
     </div>
@@ -50,6 +50,103 @@
     <img src="panel.jpg" alt="The Euclid panel searching “filters”: GitHub issues and PRs from the github plugin, and a “1.2M tok · $4.10” badge from the tokens plugin on the search bar" loading="lazy">
     <figcaption>The real panel: GitHub rows come from the <code>github</code> plugin's script; the <code>1.2M tok · $4.10</code> pill is the <code>tokens</code> badge.</figcaption>
   </figure>
+
+  <section id="vibe">
+    <h2>Build one with your agent</h2>
+    <p class="sub">Euclid keeps the whole plugin format in <code>~/.config/euclid/plugins/AGENTS.md</code>, written for
+      coding agents. Your agent reads it, writes the folder, runs <code>--try-plugin</code> until it prints OK, and the
+      plugin shows up in the bar the moment it's saved.</p>
+    <div class="builder">
+      <div class="agentdemo" aria-label="Illustration: an agent builds a Vercel plugin" role="img">
+        <div class="bar"><i></i><i></i><i></i><span>your agent</span></div>
+        <div class="screen" id="agentScreen"></div>
+      </div>
+      <div class="ask">
+        <h3>1. Describe what you want</h3>
+        <textarea id="want" rows="3" spellcheck="false">shows my 20 most recent Vercel deployments, with project, state and age, and opens each one</textarea>
+        <h3>2. Copy the prompt into Claude Code, Codex or any agent with a shell</h3>
+        <pre class="prompt" id="promptOut"><button class="copy" type="button">Copy</button></pre>
+        <p class="fine">The prompt points at the <a href="AGENTS.md">plugin guide</a>, the whole format on one page.
+          Euclid also keeps a copy at <code>~/.config/euclid/plugins/AGENTS.md</code>.
+          Agent without web access? <button type="button" class="linkish" id="copyGuide">Copy the guide</button> and paste it in first.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="card"><div class="num">1</div><h3>Ask</h3><p>Paste a prompt into Claude Code, Codex or any agent with a shell.</p></div>
+      <div class="card"><div class="num">2</div><h3>It tests itself</h3><p><code>--try-plugin</code> prints the exact rows or error, so the agent fixes its own mistakes.</p></div>
+      <div class="card"><div class="num">3</div><h3>It's live</h3><p>Euclid watches the plugins folder and reloads on save. You don't restart anything.</p></div>
+    </div>
+
+    <h3 class="example">Worked example: a token badge</h3>
+    <p class="muted-p">Paste this, and a minute later the bar shows <span class="badge-demo">1.2M tok · $4.10</span>. Click it and
+      <code>ccusage</code> opens in a new Ghostty tab.</p>
+    <pre class="prompt"><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md. Then make a Euclid plugin in
+~/.config/euclid/plugins/tokens that shows today's Claude Code token use and
+cost as a badge on the bar, using `npx -y ccusage@latest daily --json`.
+Clicking the badge should open `ccusage daily` in a new Ghostty tab
+(ghostty-run tab ...). Refresh every 5 minutes.
+Run `/Applications/euclid-bar.app/Contents/MacOS/euclid-bar --try-plugin tokens`
+and fix the plugin until it prints OK.</pre>
+
+    <p class="muted-p" style="margin-top:22px">What the agent ends up writing:</p>
+    <div class="two">
+      <pre><span class="c"># tokens/plugin.toml</span>
+name = "Claude tokens"
+
+<span class="k">[badge]</span>
+run   = "./today.sh"
+icon  = "gauge.with.dots.needle.33percent"
+refresh_minutes = 5
+click = 'ghostty-run tab npx -y ccusage@latest daily'</pre>
+      <pre><span class="c"># tokens/today.sh</span>
+#!/bin/sh
+set -eu
+npx -y ccusage@latest daily \
+    --since "$(date +%Y%m%d)" --json |
+  jq -r '[.totals.totalTokens, .totals.totalCost] | @tsv' |
+  awk -F '\t' '{ printf "%.1fM tok · $%.2f\n", $1/1e6, $2 }'</pre>
+    </div>
+
+    <h3 class="example">More prompts to start from</h3>
+    <div class="recipes">
+      <article class="recipe">
+        <header><h3>Vercel deploys</h3><span class="cat">Source</span></header>
+        <p>Recent deploys in search; <kbd>↵</kbd> opens one.</p>
+        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
+plugin "vercel" that lists my 20 most recent Vercel deployments
+(vercel ls --json) with project, state and age, opening each URL.
+Test it with euclid-bar --try-plugin vercel until it prints OK.</pre>
+      </article>
+      <article class="recipe">
+        <header><h3>Time zones</h3><span class="cat">Answer</span></header>
+        <p>Type <code>tz 3pm</code> and see that time in your team's cities.</p>
+        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
+plugin "tz" with an [answer] on prefix "tz": `tz 3pm` shows 3pm
+local time in Sydney, London and San Francisco, one row each,
+↵ copies the row. Use only date(1). Test with
+euclid-bar --try-plugin tz "tz 3pm" until it prints OK.</pre>
+      </article>
+      <article class="recipe">
+        <header><h3>On-call status</h3><span class="cat">Badge</span></header>
+        <p>Who's on call, right on the bar.</p>
+        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
+plugin "oncall" with a badge showing who is on call now from
+PagerDuty (token from the Keychain, service euclid-pagerduty),
+refreshed every 15 minutes; clicking opens the schedule.
+Test with euclid-bar --try-plugin oncall until it prints OK.</pre>
+      </article>
+      <article class="recipe">
+        <header><h3>Runbooks</h3><span class="cat">Source</span></header>
+        <p>Every runbook in your team repo, searchable.</p>
+        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
+plugin "runbooks" that lists the markdown files in
+~/work/ops/runbooks by their first heading, opens them in my
+editor, and shows the first 40 lines in the preview.
+Test with euclid-bar --try-plugin runbooks until it prints OK.</pre>
+      </article>
+    </div>
+  </section>
 
   <section id="directory">
     <h2>Directory</h2>
@@ -313,86 +410,6 @@ jq -c --arg to &quot;$to&quot; --arg from &quot;$from&quot; --arg n &quot;$amoun
       <code>euclid-bar --plugin add https://github.com/you/euclid-plugin-deploys</code>.</p>
   </section>
 
-  <section id="vibe">
-    <h2>Vibe-code one</h2>
-    <p class="sub">Euclid keeps the whole plugin format in <code>~/.config/euclid/plugins/AGENTS.md</code>, written for
-      coding agents. Your agent reads it, writes the folder, runs <code>--try-plugin</code> until it prints OK, and the
-      plugin shows up in the bar the moment it's saved.</p>
-    <div class="steps">
-      <div class="card"><div class="num">1</div><h3>Ask</h3><p>Paste a prompt into Claude Code, Codex or any agent with a shell.</p></div>
-      <div class="card"><div class="num">2</div><h3>It tests itself</h3><p><code>--try-plugin</code> prints the exact rows or error, so the agent fixes its own mistakes.</p></div>
-      <div class="card"><div class="num">3</div><h3>It's live</h3><p>Euclid watches the plugins folder and reloads on save. You don't restart anything.</p></div>
-    </div>
-
-    <h3 class="example">Worked example: a token badge</h3>
-    <p class="muted-p">Paste this, and a minute later the bar shows <span class="badge-demo">1.2M tok · $4.10</span>. Click it and
-      <code>ccusage</code> opens in a new Ghostty tab.</p>
-    <pre class="prompt"><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md. Then make a Euclid plugin in
-~/.config/euclid/plugins/tokens that shows today's Claude Code token use and
-cost as a badge on the bar, using `npx -y ccusage@latest daily --json`.
-Clicking the badge should open `ccusage daily` in a new Ghostty tab
-(ghostty-run tab ...). Refresh every 5 minutes.
-Run `/Applications/euclid-bar.app/Contents/MacOS/euclid-bar --try-plugin tokens`
-and fix the plugin until it prints OK.</pre>
-
-    <p class="muted-p" style="margin-top:22px">What the agent ends up writing:</p>
-    <div class="two">
-      <pre><span class="c"># tokens/plugin.toml</span>
-name = "Claude tokens"
-
-<span class="k">[badge]</span>
-run   = "./today.sh"
-icon  = "gauge.with.dots.needle.33percent"
-refresh_minutes = 5
-click = 'ghostty-run tab npx -y ccusage@latest daily'</pre>
-      <pre><span class="c"># tokens/today.sh</span>
-#!/bin/sh
-set -eu
-npx -y ccusage@latest daily \
-    --since "$(date +%Y%m%d)" --json |
-  jq -r '[.totals.totalTokens, .totals.totalCost] | @tsv' |
-  awk -F '\t' '{ printf "%.1fM tok · $%.2f\n", $1/1e6, $2 }'</pre>
-    </div>
-
-    <h3 class="example">More prompts to start from</h3>
-    <div class="recipes">
-      <article class="recipe">
-        <header><h3>Vercel deploys</h3><span class="cat">Source</span></header>
-        <p>Recent deploys in search; <kbd>↵</kbd> opens one.</p>
-        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
-plugin "vercel" that lists my 20 most recent Vercel deployments
-(vercel ls --json) with project, state and age, opening each URL.
-Test it with euclid-bar --try-plugin vercel until it prints OK.</pre>
-      </article>
-      <article class="recipe">
-        <header><h3>Time zones</h3><span class="cat">Answer</span></header>
-        <p>Type <code>tz 3pm</code> and see that time in your team's cities.</p>
-        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
-plugin "tz" with an [answer] on prefix "tz": `tz 3pm` shows 3pm
-local time in Sydney, London and San Francisco, one row each,
-↵ copies the row. Use only date(1). Test with
-euclid-bar --try-plugin tz "tz 3pm" until it prints OK.</pre>
-      </article>
-      <article class="recipe">
-        <header><h3>On-call status</h3><span class="cat">Badge</span></header>
-        <p>Who's on call, right on the bar.</p>
-        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
-plugin "oncall" with a badge showing who is on call now from
-PagerDuty (token from the Keychain, service euclid-pagerduty),
-refreshed every 15 minutes; clicking opens the schedule.
-Test with euclid-bar --try-plugin oncall until it prints OK.</pre>
-      </article>
-      <article class="recipe">
-        <header><h3>Runbooks</h3><span class="cat">Source</span></header>
-        <p>Every runbook in your team repo, searchable.</p>
-        <pre><button class="copy" type="button">Copy</button>Read ~/.config/euclid/plugins/AGENTS.md and make a Euclid
-plugin "runbooks" that lists the markdown files in
-~/work/ops/runbooks by their first heading, opens them in my
-editor, and shows the first 40 lines in the preview.
-Test with euclid-bar --try-plugin runbooks until it prints OK.</pre>
-      </article>
-    </div>
-  </section>
 
   <section id="how">
     <h2>How plugins work</h2>
@@ -708,6 +725,64 @@ run   = 'open "https://developer.mozilla.org/en-US/search?q=$EUCLID_QUERY_URL"'<
   }
   addEventListener('hashchange', fromHash);
   fromHash();
+</script>
+<script>
+  // Prompt builder: what you want → a prompt for your agent.
+  const want = document.getElementById('want'), out = document.getElementById('promptOut');
+  const copyBtn = out.querySelector('.copy');
+  function prompt() {
+    const w = want.value.trim().replace(/\.$/, '') || 'does what I describe';
+    return `Read https://euclid.lgtmworks.com/plugins/AGENTS.md (or ~/.config/euclid/plugins/AGENTS.md).
+Then make a Euclid plugin in ~/.config/euclid/plugins/ that ${w}.
+Pick a short id for the folder. Keep secrets in the Keychain, never in plugin.toml.
+Run /Applications/euclid-bar.app/Contents/MacOS/euclid-bar --try-plugin <id>
+and fix it until it prints OK, then tell me what to type in Euclid to see it.`;
+  }
+  function render() { out.textContent = ''; out.append(copyBtn, prompt()); }
+  want.addEventListener('input', render); render();
+  document.getElementById('copyGuide').addEventListener('click', async (e) => {
+    try { await navigator.clipboard.writeText(await (await fetch('AGENTS.md')).text()); e.target.textContent = 'Copied the guide'; }
+    catch { location.href = 'AGENTS.md'; }
+  });
+
+  // The agent demo: a scripted illustration, typed out line by line.
+  const screen = document.getElementById('agentScreen');
+  const script = [
+    ['you', '> make a Euclid plugin that shows my 20 most recent Vercel deployments'],
+    ['dim', '  Reading euclid.lgtmworks.com/plugins/AGENTS.md'],
+    ['ok',  '  ✓ Wrote ~/.config/euclid/plugins/vercel/plugin.toml'],
+    ['code','      [source]  run = "./items.sh"  refresh_minutes = 5'],
+    ['ok',  '  ✓ Wrote items.sh  (vercel ls --json | jq → one row per deploy)'],
+    ['dim', '  $ euclid-bar --try-plugin vercel'],
+    ['err', '    items.sh: jq: error: null (null) has no keys'],
+    ['dim', '  Fixing: deployments live under .deployments'],
+    ['dim', '  $ euclid-bar --try-plugin vercel'],
+    ['ok',  '    OK · source: 20 rows in 0.41 s'],
+    ['done','  Done. Open Euclid (⌥Space) and type "deploy".'],
+    ['bar', ''],
+  ];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  async function play() {
+    screen.textContent = '';
+    for (const [kind, text] of script) {
+      const line = document.createElement('div');
+      line.className = 'l ' + kind;
+      screen.append(line);
+      if (kind === 'bar') {
+        line.innerHTML = '<div class="mini"><div class="q">deploy<span class="caret"></span></div>'
+          + '<div class="r sel"><b>web</b> · Ready · 3m ago<span>Vercel</span></div>'
+          + '<div class="r"><b>docs</b> · Building · 1m ago<span>Vercel</span></div>'
+          + '<div class="r"><b>api</b> · Error · 12m ago<span>Vercel</span></div></div>';
+        continue;
+      }
+      if (reduce || kind !== 'you') { line.textContent = text; await wait(reduce ? 0 : 420); continue; }
+      for (let i = 1; i <= text.length; i++) { line.textContent = text.slice(0, i); await wait(18); }
+      await wait(400);
+    }
+    if (!reduce) { await wait(5000); play(); }
+  }
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); play(); } }).observe(screen);
 </script>
 <!-- Cloudflare Web Analytics: cookie-free page views -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "153c6065866e4bef9595b3c0df2fc248"}'></script>

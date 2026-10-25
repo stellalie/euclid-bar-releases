@@ -44,7 +44,7 @@
       <li><b>No subscription</b>, ever</li>
       <li><b>Bring your own AI</b>, or none</li>
       <li><b>Works offline</b></li>
-      <li><b>Config is a file</b></li>
+      <li><b>Your setup is one folder</b>, put it in git</li>
     </ul>
 
     <div class="demo">
@@ -110,6 +110,25 @@
   </section>
 
 
+  <section id="folder">
+    <h2>Your whole setup is one folder. Put it in git.</h2>
+    <p class="sub">Everything you configure lives in <code>~/.config/euclid</code>. Commit it with your dotfiles, and a new Mac is one <code>git clone</code> away.</p>
+    <div class="two">
+      <pre><span class="c">~/.config/euclid/</span>
+├── config.toml   <span class="c"># actions, snippets, hotkeys, aliases, integrations</span>
+├── bin/          <span class="c"># ghostty-run, herdr-run and your own scripts</span>
+└── plugins/      <span class="c"># one folder per plugin, plus AGENTS.md</span>
+
+<span class="k">$</span> cd ~/.config/euclid &amp;&amp; git init &amp;&amp; git add . &amp;&amp; git commit -m "my euclid"</pre>
+      <ul class="plain">
+        <li><b>Review it like code.</b> Every change is a diff you can read, revert or share in a PR.</li>
+        <li><b>No secrets in the repo.</b> Tokens stay in the Keychain; plugins and integrations read them with a command.</li>
+        <li><b>No machine junk either.</b> Clipboard, history, indexes and the licence live in <code>~/Library/Application Support/Euclid</code>.</li>
+        <li><b>Share with your team.</b> <code>include</code> a team file and point <code>[plugins] paths</code> at a team repo; your own settings still win.</li>
+      </ul>
+    </div>
+  </section>
+
   <section id="different">
     <h2>What you don't sign up for</h2>
     <p class="sub">Launchers tend to grow accounts, AI plans and extension stores. Euclid keeps the box small and hands you the keys.</p>
@@ -118,7 +137,7 @@
       <div class="row"><span>Price</span><span><b>Pay once.</b> Free during the beta.</span><span>Monthly plan for AI, sync and themes</span></div>
       <div class="row"><span>AI</span><span><b>Any agent or model you run</b>, local ones too</span><span>The vendor's AI, on the vendor's plan</span></div>
       <div class="row"><span>Extending it</span><span><b>A script that prints JSON</b>, in any language</span><span>An SDK, a build step and a store review</span></div>
-      <div class="row"><span>Settings</span><span><b>One TOML file</b> in your dotfiles</span><span>A settings window and a cloud account</span></div>
+      <div class="row"><span>Settings</span><span><b>One folder you keep in git</b>: config, scripts, plugins</span><span>A settings window and a cloud account</span></div>
       <div class="row"><span>Your data</span><span><b>Stays on your Mac</b></span><span>Synced to someone's server</span></div>
     </div>
   </section>
