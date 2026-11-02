@@ -16,10 +16,10 @@ jobs:
       HOMEBREW_NO_AUTO_UPDATE: 1
       HOMEBREW_NO_ANALYTICS: 1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Tap this checkout
         run: brew tap stellalie/euclid "$GITHUB_WORKSPACE"
-      # Exactly what users type: the fully qualified name also trusts the tap (brew 5 trust model).
+      # Exactly what users type: the fully qualified name also trusts it (Homebrew refuses untrusted third-party taps).
       - name: Install
         run: brew install --cask stellalie/euclid/euclid
       - name: Lint
