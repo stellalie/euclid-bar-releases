@@ -1,0 +1,38 @@
+# Installs the Homebrew cask on a clean Mac the way users do, and checks the app and CLI work.
+# Runs on cask changes, including the bump each stable release pushes.
+name: Cask
+on:
+  push:
+    branches: [main]
+    paths: [Casks/**, .github/workflows/cask.yml]
+  pull_request:
+    paths: [Casks/**, .github/workflows/cask.yml]
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: macos-15
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_NO_ANALYTICS: 1
+    steps:
+      - uses: actions/checkout@v5
+      - name: Tap this checkout
+        run: brew tap stellalie/euclid "$GITHUB_WORKSPACE"
+      # Exactly what users type: the fully qualified name also trusts it (Homebrew refuses untrusted third-party taps).
+      - name: Install
+        run: brew install --cask stellalie/euclid/euclid
+      - name: Lint
+        run: |
+          brew style --cask stellalie/euclid/euclid
+          brew audit --cask --online stellalie/euclid/euclid
+      - name: App is signed and notarized
+        run: |
+          codesign --verify --strict --deep /Applications/Euclid.app
+          spctl --assess --type execute -vv /Applications/Euclid.app
+      - name: CLI is on PATH and runs
+        run: |
+          command -v euclid-bar
+          euclid-bar --check-config
+      - name: Uninstall
+        run: brew uninstall --cask --zap stellalie/euclid/euclid && test ! -e /Applications/Euclid.app
