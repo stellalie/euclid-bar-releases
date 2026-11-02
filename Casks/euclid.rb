@@ -17,7 +17,7 @@ cask "euclid" do
   end
 
   auto_updates true
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Euclid.app"
   binary "#{appdir}/Euclid.app/Contents/MacOS/euclid-bar"
