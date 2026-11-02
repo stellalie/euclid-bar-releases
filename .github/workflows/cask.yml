@@ -19,12 +19,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Tap this checkout
         run: brew tap stellalie/euclid "$GITHUB_WORKSPACE"
+      # Exactly what users type: the fully qualified name also trusts the tap (brew 5 trust model).
+      - name: Install
+        run: brew install --cask stellalie/euclid/euclid
       - name: Lint
         run: |
           brew style --cask stellalie/euclid/euclid
           brew audit --cask --online stellalie/euclid/euclid
-      - name: Install
-        run: brew install --cask stellalie/euclid/euclid
       - name: App is signed and notarized
         run: |
           codesign --verify --strict --deep /Applications/Euclid.app
