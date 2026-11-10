@@ -3,8 +3,8 @@
 #   brew install --cask stellalie/euclid/euclid
 # Each stable release bumps version and sha256 here (euclid-bar: scripts/bump-cask.sh).
 cask "euclid" do
-  version "1.4.0"
-  sha256 "4f651561fa1f906a3268f4b80342e314340b84a86ecdfac74ca9067201805cc4"
+  version "1.5.0"
+  sha256 "753d8464ba115b00d063e75c84a5f2d5b618e11d738b2be6a164d9c6a40af670"
 
   url "https://github.com/stellalie/euclid-bar-releases/releases/download/v#{version}/Euclid-#{version}.zip"
   name "Euclid"
